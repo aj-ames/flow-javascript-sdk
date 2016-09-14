@@ -24,6 +24,5 @@
   "moduleType": [
     "globals",
     "node"
-  ],
-  "private": true
+  ]
 }
