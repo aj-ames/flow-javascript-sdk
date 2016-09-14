@@ -1,0 +1,51 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "mocha/mocha.d.ts": {
+      "commit": "084e55916674ff7128722bf72150aa55acea08d9"
+    },
+    "node/node.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "core-js/core-js.d.ts": {
+      "commit": "084e55916674ff7128722bf72150aa55acea08d9"
+    },
+    "chai/chai.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "assertion-error/assertion-error.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "chai-as-promised/chai-as-promised.d.ts": {
+      "commit": "084e55916674ff7128722bf72150aa55acea08d9"
+    },
+    "promises-a-plus/promises-a-plus.d.ts": {
+      "commit": "084e55916674ff7128722bf72150aa55acea08d9"
+    },
+    "sinon/sinon.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "sinon-chai/sinon-chai.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "sinon-as-promised/sinon-as-promised.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "node-uuid/node-uuid.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "node-uuid/node-uuid-base.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "node-uuid/node-uuid-cjs.d.ts": {
+      "commit": "4c530f28d1e4bea629efe6232072889e3c6c93ac"
+    },
+    "axios/axios.d.ts": {
+      "commit": "2fc5063371b44b5b020e96f3fde1a747761fa8a6"
+    }
+  }
+}

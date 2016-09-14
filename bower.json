@@ -1,0 +1,29 @@
+{
+  "name": "scandit-flow-sdk",
+  "description": "Scandit Flow - JavaScript SDK",
+  "main": "dist/scandit.js",
+  "authors": [{
+    "name": "Scandit AG",
+    "email": "info@scandit.com",
+    "homepage": "http://www.scandit.com/"
+  }],
+  "license": "Apache-2.0",
+  "homepage": "http://www.scandit.com/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "src",
+    "examples",
+    "lib",
+    "typings",
+    "tsd.json",
+    "gulpfile.js"
+  ],
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "private": true
+}

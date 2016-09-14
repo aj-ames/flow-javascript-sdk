@@ -1,0 +1,22 @@
+#status {
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+#outputcontainer {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+}
+
+#outputcontainer .output {
+    background-color: #c0c0c0;
+    font-family: monospace;
+    padding: 5px;
+}
+#outputcontainer .output .opt, #outputcontainer .output pre {
+    display: block;
+    width: 100%;
+}

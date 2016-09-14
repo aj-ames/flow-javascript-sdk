@@ -1,0 +1,14 @@
+{
+  "name": "mytestapp",
+  "version": "1.0.0",
+  "description": "example",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Scandit AG <info@scandit.com>",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "scandit-flow-sdk": "latest"
+  }
+}

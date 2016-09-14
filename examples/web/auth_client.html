@@ -1,0 +1,59 @@
+<html>
+<head>
+    <link href="assets/plsdontlooklike1990.css" type="text/css" rel="stylesheet" />
+    <link href="assets/main.css" type="text/css" rel="stylesheet" />
+
+    <script src="bower_components/scandit-flow-sdk/dist/scandit.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script src="assets/example.js"></script>
+    <script src="config.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            var loginButton = $('#auth');
+
+            var client = new Scandit.Client({
+                method: Scandit.Auth.Method.CLIENT,
+                clientId: CONFIG.CLIENT.CLIENT_ID,
+                clientSecret: CONFIG.CLIENT.CLIENT_SECRET
+            });
+
+            client.init()
+                    .then(function(authStatus) {
+                        if (authStatus) {
+                            example.utils.status('You are authenticated', 'info');
+                            example.testApi(client);
+                        } else {
+                            example.utils.status('Please login', 'info');
+                            loginButton.show();
+                        }
+                    })
+                    .catch(function(err) {
+                        example.utils.status('Unexpected error during initialization: ' + err, 'error');
+                    });
+
+            loginButton.click(function () {
+                client.authenticate()
+                        .then((function () {
+                            example.utils.status('Authenticated successfully', 'info');
+                            loginButton.hide();
+                            example.testApi(client);
+                        }))
+                        .catch(function (err) {
+                            example.utils.status('Authentication failed: ' + err, 'error');
+                        });
+            });
+
+            client.on('auth.expire', function() {
+                example.utils.status('Session expired', 'warn');
+                loginButton.show();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Example: client authentication</h1>
+    <button id="auth" style="display: none;">LOGIN</button>
+</body>
+</html>

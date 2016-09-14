@@ -1,0 +1,15 @@
+{
+  "name": "mytestapp",
+  "authors": [
+    "Scandit AG <info@scandit.com>"
+  ],
+  "description": "example",
+  "main": "",
+  "license": "Apache-2.0",
+  "homepage": "http://www.scandit.com/",
+  "dependencies": {
+    "scandit-flow-sdk": "latest",
+    "jquery": "^3.1.0"
+  },
+  "private": true
+}

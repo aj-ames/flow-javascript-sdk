@@ -1,0 +1,50 @@
+nav {
+    display: none;
+    float: none;
+    border-left: none;
+    width: auto;
+    flex-direction: column;
+}
+
+#main {
+    width: 100%;
+}
+
+article dl {
+    margin-bottom: 20px;
+}
+
+header {
+  padding: 0;
+}
+
+h1 {
+    font-size: 35px;
+    margin: 12px 24px 12px;
+}
+
+h2 {
+    font-size: 25px;
+}
+
+h3 {
+    font-size: 20px;
+}
+
+h4 {
+    font-size: 16px;
+}
+
+h5, .container-overview .subsection-title {
+    font-size: 15px;
+}
+
+table.params, table.props {
+    font-size: 12px;
+}
+
+.screenshot {
+  width: 25vw;
+  min-width: 220px;
+  max-width: 400px;
+}

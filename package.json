@@ -1,0 +1,53 @@
+{
+  "name": "scandit-flow-sdk",
+  "version": "0.0.1",
+  "description": "Scandit Flow - JavaScript SDK",
+  "main": "lib/Scandit.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "TBD"
+  },
+  "author": {
+    "name": "Scandit AG",
+    "email": "info@scandit.com",
+    "url": "http://www.scandit.com/"
+  },
+  "license": "Apache-2.0",
+  "files": [
+    "lib"
+  ],
+  "dependencies": {
+    "axios": "^0.14.0",
+    "cerialize": "^0.1.10"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "dts-bundle": "^0.5.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^3.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-shell": "^0.5.2",
+    "gulp-tsc": "^1.2.3",
+    "gulp-uglifyjs": "^0.6.2",
+    "istanbul": "^0.4.5",
+    "jsdoc": "^3.4.1",
+    "jsverify": "^0.7.3",
+    "mocha": "^3.0.2",
+    "mock-browser": "^0.92.12",
+    "node-uuid": "^1.4.7",
+    "remap-istanbul": "^0.6.4",
+    "sinon": "^1.17.5",
+    "sinon-as-promised": "^4.0.2",
+    "sinon-chai": "^2.8.0",
+    "source-map-support": "^0.4.2",
+    "typescript": "^1.8.10",
+    "webpack-stream": "^3.2.0"
+  },
+  "typings": "./lib/Scandit.d.ts"
+}

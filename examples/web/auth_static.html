@@ -1,0 +1,37 @@
+<html>
+<head>
+    <link href="assets/plsdontlooklike1990.css" type="text/css" rel="stylesheet" />
+    <link href="assets/main.css" type="text/css" rel="stylesheet" />
+
+    <script src="bower_components/scandit-flow-sdk/dist/scandit.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script src="assets/example.js"></script>
+    <script src="config.js"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            var client = new Scandit.Client({
+                method: Scandit.Auth.Method.STATIC_KEY,
+                key: CONFIG.STATIC.API_KEY
+            });
+
+            client.init()
+                    .then(function(authStatus) {
+                        if (authStatus) {
+                            example.utils.status('You are authenticated', 'info');
+                            example.testApi(client);
+                        } else {
+                            example.utils.status('Invalid static token', 'error');
+                        }
+                    })
+                    .catch(function(err) {
+                        example.utils.status('Unexpected error during initialization: ' + err, 'error');
+                    });
+        });
+    </script>
+</head>
+<body>
+    <h1>Example: static API token</h1>
+</body>
+</html>
