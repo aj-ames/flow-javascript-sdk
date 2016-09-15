@@ -1,5 +1,5 @@
-import {RefreshableAuthenticator} from "../../../src/auth/authenticator/RefreshableAuthenticator";
-import {HttpClientInterface} from "../../../src/http/HttpClientInterface";
+import {RefreshableAuthenticator} from '../../../src/auth/authenticator/RefreshableAuthenticator';
+import {HttpClientInterface} from '../../../src/http/HttpClientInterface';
 
 class TestAuthenticator extends RefreshableAuthenticator {
     init(): Promise<boolean> {

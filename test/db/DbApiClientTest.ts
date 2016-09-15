@@ -1,6 +1,6 @@
-import {TestHttpClient} from "../helpers/TestHttpClient";
-import {Response} from "../../src/http/HttpClientInterface";
-import {DbApiClient} from "../../src/db/DbApiClient";
+import {TestHttpClient} from '../helpers/TestHttpClient';
+import {Response} from '../../src/http/HttpClientInterface';
+import {DbApiClient} from '../../src/db/DbApiClient';
 
 describe('db.DbApiClient', () => {
     let subject = new DbApiClient();
@@ -9,7 +9,7 @@ describe('db.DbApiClient', () => {
         let testHttpClient = new TestHttpClient();
         let testDbSchema = {
             classes: [
-                {name: "FirstObj", fields: [
+                {name: 'FirstObj', fields: [
                     {name: 'teststring', type: 'string'},
                     {name: 'testint', type: 'integer'},
                     {name: 'testfloat', type: 'float'},
@@ -24,7 +24,7 @@ describe('db.DbApiClient', () => {
                         config: {},
                     }
                 }},
-                {name: "SecondObj", fields: [
+                {name: 'SecondObj', fields: [
                     {name: 'teststring', type: 'string'},
                     {name: 'testint', type: 'integer'},
                 ], indices: [], config: {
@@ -33,7 +33,7 @@ describe('db.DbApiClient', () => {
                         config: {},
                     }
                 }},
-                {name: "ThirdObj", fields: [
+                {name: 'ThirdObj', fields: [
                     {name: 'teststring', type: 'string'},
                 ], indices: [], config: {
                     sync: {

@@ -1,4 +1,4 @@
-import * as http from "http";
+import * as http from 'http';
 
 export class WebServerTestHelper {
     public static PORT = 9999;

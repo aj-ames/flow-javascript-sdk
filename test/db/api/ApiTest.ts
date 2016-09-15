@@ -1,4 +1,4 @@
-import {Api} from "../../../src/db/api/Api";
+import {Api} from '../../../src/db/api/Api';
 
 describe('db.api.Api', () => {
     let subject = Api;

@@ -1,13 +1,13 @@
 import {TokenStorage} from './TokenStorage';
 import {Token} from '../token/Token';
 
-const DEFAULT_COOKIE_NAME = "scandit_flow";
+const DEFAULT_COOKIE_NAME = 'scandit_flow';
 
 export class CookieStorage extends TokenStorage {
     private key: string;
 
     constructor(key?: string) {
-        if (typeof document == 'undefined' || typeof document.cookie == 'undefined') throw new ReferenceError("Cookies are not supported.");
+        if (typeof document == 'undefined' || typeof document.cookie == 'undefined') throw new ReferenceError('Cookies are not supported.');
         super();
         this.key = key || DEFAULT_COOKIE_NAME;
     }

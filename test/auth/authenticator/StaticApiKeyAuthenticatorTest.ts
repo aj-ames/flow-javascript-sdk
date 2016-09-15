@@ -1,4 +1,4 @@
-import {StaticApiKeyAuthenticator} from "../../../src/auth/authenticator/StaticApiKeyAuthenticator";
+import {StaticApiKeyAuthenticator} from '../../../src/auth/authenticator/StaticApiKeyAuthenticator';
 
 describe('StaticApiKeyAuthenticator', () => {
     let subject = StaticApiKeyAuthenticator;

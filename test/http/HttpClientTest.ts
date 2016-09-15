@@ -1,6 +1,6 @@
 import {WebServerTestHelper} from '../helpers/WebServerTestHelper';
-import {HttpClient} from "../../src/http/HttpClient";
-import {Response} from "../../src/http/HttpClientInterface";
+import {HttpClient} from '../../src/http/HttpClient';
+import {Response} from '../../src/http/HttpClientInterface';
 
 describe('http.HttpClient', () => {
     let subject: HttpClient;
@@ -16,7 +16,7 @@ describe('http.HttpClient', () => {
 
     describe('#request', () => {
         it('performs HTTP request', (done) => {
-            subject.request("GET", `http://localhost:${WebServerTestHelper.PORT}/test/`)
+            subject.request('GET', `http://localhost:${WebServerTestHelper.PORT}/test/`)
                 .then((response: Response) => {
                     WebServerTestHelper.shouldReceiveRequest('GET', '/test/');
                     response.status.should.eq(200);

@@ -5,7 +5,7 @@ export interface Config {
 }
 
 export const AuthDefaults = {
-    AUTHENTICATION_HEADER: "Authorization",
+    AUTHENTICATION_HEADER: 'Authorization',
 
     BASE_URL: ((): string => {
         let baseUrl;

@@ -1,4 +1,4 @@
-import {OAuthHttpClient} from "../../src/http/OAuthHttpClient";
+import {OAuthHttpClient} from '../../src/http/OAuthHttpClient';
 
 describe('OAuthHttpClient', () => {
     let subject = OAuthHttpClient;

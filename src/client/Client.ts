@@ -46,7 +46,7 @@ export default class Client extends EventEmitter {
                 storage = null;
                 break;
             default:
-                throw new ReferenceError("Invalid config provided - unknown storage");
+                throw new ReferenceError('Invalid config provided - unknown storage');
         }
 
         switch (config.method) {
@@ -63,7 +63,7 @@ export default class Client extends EventEmitter {
                 this.authenticator = new UserCredentialsAuthenticator(<UserCredentialsConfig>config, storage);
                 break;
             default:
-                throw new ReferenceError("Invalid config provided - unknown method");
+                throw new ReferenceError('Invalid config provided - unknown method');
         }
 
         this.authenticator.on('auth.login', (ctx) => { this.emit('auth.login', ctx) });
@@ -98,7 +98,7 @@ export default class Client extends EventEmitter {
     }
 
     public authenticate(...credentials: string[]): Promise<void> {
-        if(!this.authenticator) throw new ReferenceError("Provider is not configured.");
+        if(!this.authenticator) throw new ReferenceError('Provider is not configured.');
         return this.authenticator.authenticate.apply(this.authenticator, credentials)
             .then(() => {
                 return this.init();

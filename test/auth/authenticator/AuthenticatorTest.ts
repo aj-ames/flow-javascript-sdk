@@ -1,5 +1,5 @@
-import {Authenticator} from "../../../src/auth/authenticator/Authenticator";
-import {HttpClientInterface} from "../../../src/http/HttpClientInterface";
+import {Authenticator} from '../../../src/auth/authenticator/Authenticator';
+import {HttpClientInterface} from '../../../src/http/HttpClientInterface';
 
 class TestAuthenticator extends Authenticator {
     init(): Promise<boolean> {

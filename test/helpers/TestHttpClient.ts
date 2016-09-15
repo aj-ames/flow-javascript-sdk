@@ -1,6 +1,6 @@
 import * as url from 'url';
-import {RequestOptions, Response} from "../../src/http/HttpClientInterface";
-import {BaseHttpClient} from "../../src/http/BaseHttpClient";
+import {RequestOptions, Response} from '../../src/http/HttpClientInterface';
+import {BaseHttpClient} from '../../src/http/BaseHttpClient';
 
 export class TestHttpClient extends BaseHttpClient {
     private mocks: { [key:string]:Response;};
@@ -22,7 +22,7 @@ export class TestHttpClient extends BaseHttpClient {
             } else {
                 let response = <Response>{};
                 response.status = -1;
-                response.body = "Unknown mock";
+                response.body = 'Unknown mock';
                 reject(response);
             }
         });

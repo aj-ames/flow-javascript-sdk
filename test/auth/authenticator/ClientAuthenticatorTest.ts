@@ -1,4 +1,4 @@
-import {ClientAuthenticator} from "../../../src/auth/authenticator/ClientAuthenticator";
+import {ClientAuthenticator} from '../../../src/auth/authenticator/ClientAuthenticator';
 
 describe('ClientAuthenticator', () => {
     let subject = ClientAuthenticator;

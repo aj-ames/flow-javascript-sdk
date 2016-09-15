@@ -1,4 +1,4 @@
-import {UserImplicitAuthenticator} from "../../../src/auth/authenticator/UserImplicitAuthenticator";
+import {UserImplicitAuthenticator} from '../../../src/auth/authenticator/UserImplicitAuthenticator';
 
 describe('UserImplicitAuthenticator', () => {
     let subject = UserImplicitAuthenticator;

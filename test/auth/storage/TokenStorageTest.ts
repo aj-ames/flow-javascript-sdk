@@ -1,10 +1,10 @@
 import * as jsverify from 'jsverify';
-import {TokenStorage} from "../../../src/auth/storage/TokenStorage";
-import {UserToken} from "../../../src/auth/token/UserToken";
-import {ClientToken} from "../../../src/auth/token/ClientToken";
+import {TokenStorage} from '../../../src/auth/storage/TokenStorage';
+import {UserToken} from '../../../src/auth/token/UserToken';
+import {ClientToken} from '../../../src/auth/token/ClientToken';
 
 describe('auth.storage.TokenStorage', () => {
-    let testToken = new UserToken("testtoken", 1000, "bearer", new Date(1473431171404), "testrefreshtoken");
+    let testToken = new UserToken('testtoken', 1000, 'bearer', new Date(1473431171404), 'testrefreshtoken');
     let testTokenJson = '{"token":"testtoken","createdAt":1473431171404,"expires":1000,"tokenType":"bearer","refreshToken":"testrefreshtoken","_cls":"UserToken"}';
     let testTokenSerialized = '%7B%22token%22%3A%22testtoken%22%2C%22createdAt%22%3A1473431171404%2C%22expires%22%3A1000%2C%22tokenType%22%3A%22bearer%22%2C%22refreshToken%22%3A%22testrefreshtoken%22%2C%22_cls%22%3A%22UserToken%22%7D';
 
@@ -28,11 +28,11 @@ describe('auth.storage.TokenStorage', () => {
         });
 
         it('uses class information for token type', () => {
-            let userToken = new UserToken("testtoken", 1000, "bearer", new Date(1473431171404), "testrefreshtoken");
+            let userToken = new UserToken('testtoken', 1000, 'bearer', new Date(1473431171404), 'testrefreshtoken');
             TokenStorage.deserializeToken(TokenStorage.serializeToken(userToken))
                 .should.be.an.instanceOf(UserToken);
 
-            let clientToken = new ClientToken("testtoken", 1000, "bearer", new Date(1473431171404), "testrefreshtoken");
+            let clientToken = new ClientToken('testtoken', 1000, 'bearer', new Date(1473431171404), 'testrefreshtoken');
             TokenStorage.deserializeToken(TokenStorage.serializeToken(clientToken))
                 .should.be.an.instanceOf(ClientToken);
         });

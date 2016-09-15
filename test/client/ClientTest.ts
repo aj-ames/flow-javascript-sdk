@@ -1,4 +1,4 @@
-import Client from "../../src/client/Client";
+import Client from '../../src/client/Client';
 
 describe('client.Client', () => {
     let subject = Client;

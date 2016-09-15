@@ -1,21 +1,21 @@
 import * as jsverify from 'jsverify';
 import * as uuid from 'node-uuid';
-import {makeModel, BaseModel} from "../../src/db/BaseModel";
-import {Cls} from "../../src/db/schema/Cls";
-import {Deserialize} from "cerialize";
-import {DbApiClient} from "../../src/db/DbApiClient";
-import {ApiInterface} from "../../src/db/api/ApiInterface";
+import {makeModel, BaseModel} from '../../src/db/BaseModel';
+import {Cls} from '../../src/db/schema/Cls';
+import {Deserialize} from 'cerialize';
+import {DbApiClient} from '../../src/db/DbApiClient';
+import {ApiInterface} from '../../src/db/api/ApiInterface';
 import SinonMock = Sinon.SinonMock;
 import SinonSandbox = Sinon.SinonSandbox;
 import SinonStub = Sinon.SinonStub;
-import {Field} from "../../src/db/schema/Field";
-import {QueryResult} from "../../src/db/api/QueryResult";
+import {Field} from '../../src/db/schema/Field';
+import {QueryResult} from '../../src/db/api/QueryResult';
 
 describe('db.BaseModel.BaseModel', () => {
     let subject: typeof BaseModel;
     let testDbApi:ApiInterface = <ApiInterface>{};
     let testCls = new Cls();
-    testCls.name = "TestCls";
+    testCls.name = 'TestCls';
     testCls.fields = [
         <Field>{name: 'testfield1', type: 'string'},
         <Field>{name: 'testfield2', type: 'integer'},
@@ -45,7 +45,7 @@ describe('db.BaseModel.BaseModel', () => {
             let testObj = generateTestObject();
             testDbApi.getObject = sinon.stub().resolves(testObj);
             return subject.get(testObj._id).should.be.fulfilled.then((obj) => {
-                (<SinonStub> testDbApi.getObject).should.have.been.calledOnce.calledWith("testcls", testObj._id);
+                (<SinonStub> testDbApi.getObject).should.have.been.calledOnce.calledWith('testcls', testObj._id);
                 obj.should.be.ok;
             });
         });
@@ -72,7 +72,7 @@ describe('db.BaseModel.BaseModel', () => {
             let testObjects = Array.apply(null, Array(100)).map(generateTestObject);
             testDbApi.allObjects = sinon.stub().resolves(testObjects);
             return subject.all().should.be.fulfilled.then((objs) => {
-                (<SinonStub> testDbApi.allObjects).should.have.been.calledOnce.calledWith("testcls");
+                (<SinonStub> testDbApi.allObjects).should.have.been.calledOnce.calledWith('testcls');
                 objs.should.be.lengthOf(100);
             });
         });
@@ -100,7 +100,7 @@ describe('db.BaseModel.BaseModel', () => {
         it('limits the number of objects optionally', () => {
             testDbApi.allObjects = sinon.stub().resolves([]);
             return subject.all(10).should.be.fulfilled.then(() => {
-                (<SinonStub> testDbApi.allObjects).should.have.been.calledOnce.calledWith("testcls", {limit: 10});
+                (<SinonStub> testDbApi.allObjects).should.have.been.calledOnce.calledWith('testcls', {limit: 10});
             });
         });
     });
@@ -114,7 +114,7 @@ describe('db.BaseModel.BaseModel', () => {
             let testQuery = {testfield1: {$eq: 'test'}};
             testDbApi.getObjects = sinon.stub().resolves(testResult);
             return subject.find(testQuery).should.be.fulfilled.then((objs) => {
-                (<SinonStub> testDbApi.getObjects).should.have.been.calledOnce.calledWith("testcls", testQuery);
+                (<SinonStub> testDbApi.getObjects).should.have.been.calledOnce.calledWith('testcls', testQuery);
                 objs.should.be.lengthOf(100);
             });
         });
@@ -156,7 +156,7 @@ describe('db.BaseModel.BaseModel', () => {
             let testQuery = {testfield1: {$eq: 'test'}};
             testDbApi.getObjects = sinon.stub().resolves(testResult);
             return subject.find(testQuery, {limit: 100, skip: 10}).should.be.fulfilled.then((objs) => {
-                (<SinonStub> testDbApi.getObjects).should.have.been.calledOnce.calledWith("testcls", testQuery, {limit: 100, skip: 10});
+                (<SinonStub> testDbApi.getObjects).should.have.been.calledOnce.calledWith('testcls', testQuery, {limit: 100, skip: 10});
             });
         });
     });
@@ -165,7 +165,7 @@ describe('db.BaseModel.BaseModel', () => {
         it('gives number of objects', () => {
             testDbApi.countObjects = sinon.stub().resolves(123);
             return subject.count().should.eventually.equal(123).then(() => {
-                (<SinonStub> testDbApi.countObjects).should.have.been.calledOnce.calledWith("testcls");
+                (<SinonStub> testDbApi.countObjects).should.have.been.calledOnce.calledWith('testcls');
             });
         });
 
@@ -173,7 +173,7 @@ describe('db.BaseModel.BaseModel', () => {
             testDbApi.countObjects = sinon.stub().resolves(124);
             let testQuery = {testfield1: {$eq: 'test'}};
             return subject.count(testQuery).should.eventually.equal(124).then(() => {
-                (<SinonStub> testDbApi.countObjects).should.have.been.calledOnce.calledWith("testcls", testQuery);
+                (<SinonStub> testDbApi.countObjects).should.have.been.calledOnce.calledWith('testcls', testQuery);
             });
         });
     });
@@ -186,7 +186,7 @@ describe('db.BaseModel.BaseModel', () => {
             let newId = uuid.v1();
             testDbApi.createObject = sinon.stub().resolves(newId);
             return newObj.save().should.be.fulfilled.then((obj) => {
-                (<SinonStub> testDbApi.createObject).should.have.been.calledOnce.calledWith("testcls", testObj);
+                (<SinonStub> testDbApi.createObject).should.have.been.calledOnce.calledWith('testcls', testObj);
                 obj._id.should.eql(newId);
             });
         });
@@ -196,7 +196,7 @@ describe('db.BaseModel.BaseModel', () => {
             let newObj = new subject(testObj);
             testDbApi.updateObject = sinon.stub().resolves(null);
             return newObj.save().should.be.fulfilled.then(() => {
-                (<SinonStub> testDbApi.updateObject).should.have.been.calledOnce.calledWith("testcls", testObj['_id'], {
+                (<SinonStub> testDbApi.updateObject).should.have.been.calledOnce.calledWith('testcls', testObj['_id'], {
                     testfield1: testObj.testfield1,
                     testfield2: testObj.testfield2,
                     testfield3: testObj.testfield3,
@@ -210,19 +210,19 @@ describe('db.BaseModel.BaseModel', () => {
             testDbApi.updateObject = sinon.stub().resolves(null);
 
             return newObj.save().should.be.fulfilled.then(() => {
-                (<SinonStub> testDbApi.updateObject).should.have.been.calledOnce.calledWith("testcls", testObj['_id'], {
+                (<SinonStub> testDbApi.updateObject).should.have.been.calledOnce.calledWith('testcls', testObj['_id'], {
                     testfield1: testObj.testfield1,
                     testfield2: testObj.testfield2,
                     testfield3: testObj.testfield3,
                 });
 
-                newObj['testfield1'] = "new value";
+                newObj['testfield1'] = 'new value';
                 newObj['testfield2'] = 321123;
                 newObj['testfield3'] = 11123123.23;
 
                 return newObj.save().should.be.fulfilled.then(() => {
-                    (<SinonStub> testDbApi.updateObject).should.have.been.calledTwice.calledWith("testcls", testObj['_id'], {
-                        testfield1: "new value",
+                    (<SinonStub> testDbApi.updateObject).should.have.been.calledTwice.calledWith('testcls', testObj['_id'], {
+                        testfield1: 'new value',
                         testfield2: 321123,
                         testfield3: 11123123.23,
                     });
@@ -244,7 +244,7 @@ describe('db.BaseModel.BaseModel', () => {
             let newObj = new subject(testObj);
             testDbApi.deleteObject = sinon.stub().resolves(null);
             return newObj.delete().should.be.fulfilled.then(() => {
-                (<SinonStub> testDbApi.deleteObject).should.have.been.calledOnce.calledWith("testcls", testObj._id);
+                (<SinonStub> testDbApi.deleteObject).should.have.been.calledOnce.calledWith('testcls', testObj._id);
             });
         });
 
@@ -277,31 +277,31 @@ describe('db.BaseModel.BaseModel', () => {
         });
 
         it('converts integer', () => {
-            jsverify.assert(jsverify.forall("int32", function (a) {
+            jsverify.assert(jsverify.forall('int32', function (a) {
                 return subjectInstance['convertValue'](a, 'integer') == a;
             }))
         });
 
         it('converts string', () => {
-            jsverify.assert(jsverify.forall("asciistring", function (a) {
+            jsverify.assert(jsverify.forall('asciistring', function (a) {
                 return subjectInstance['convertValue'](a, 'string') == a;
             }))
         });
 
         it('converts float', () => {
-            jsverify.assert(jsverify.forall("number", function (a) {
+            jsverify.assert(jsverify.forall('number', function (a) {
                 return subjectInstance['convertValue'](a, 'float') == parseFloat(a);
             }))
         });
 
         it('converts boolean', () => {
-            jsverify.assert(jsverify.forall("bool", function (a) {
+            jsverify.assert(jsverify.forall('bool', function (a) {
                 return subjectInstance['convertValue'](a, 'boolean') == a;
             }))
         });
 
         it('converts string array', () => {
-            jsverify.assert(jsverify.forall("array asciistring", function (a: string[]) {
+            jsverify.assert(jsverify.forall('array asciistring', function (a: string[]) {
                 return (<string[]>subjectInstance['convertValue'](a, 'array[string]')).toString() == a.toString();
             }))
         });
@@ -309,7 +309,7 @@ describe('db.BaseModel.BaseModel', () => {
 });
 
 describe('db.BaseModel.makeModel', () => {
-    let testCls = <Cls>Deserialize({name: "FirstObj", fields: [
+    let testCls = <Cls>Deserialize({name: 'FirstObj', fields: [
         {name: 'teststring', type: 'string'},
         {name: 'testint', type: 'integer'},
         {name: 'testfloat', type: 'float'},

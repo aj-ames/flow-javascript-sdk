@@ -1,7 +1,7 @@
 import {TokenStorage} from './TokenStorage';
 import {Token} from '../token/Token';
 
-const DEFAULT_STORAGE_KEY = "scandit_flow";
+const DEFAULT_STORAGE_KEY = 'scandit_flow';
 
 export abstract class BrowserStorage extends TokenStorage {
     private storage: Storage;
