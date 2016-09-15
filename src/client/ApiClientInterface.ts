@@ -1,4 +1,4 @@
-import {HttpClientInterface} from "../http/HttpClientInterface";
+import {HttpClientInterface} from '../http/HttpClientInterface';
 
 
 export interface ApiClientInterface {

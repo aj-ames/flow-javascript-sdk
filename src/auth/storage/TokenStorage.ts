@@ -1,6 +1,6 @@
-import {Token} from "../token/Token";
-import {UserToken} from "../token/UserToken";
-import {ClientToken} from "../token/ClientToken";
+import {Token} from '../token/Token';
+import {UserToken} from '../token/UserToken';
+import {ClientToken} from '../token/ClientToken';
 
 export abstract class TokenStorage {
     abstract getToken(): Promise<Token>;

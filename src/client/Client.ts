@@ -1,21 +1,21 @@
-import {Config, AuthMethod, StorageMethod} from "../auth/authenticator/config/Config";
-import {ClientConfig} from "../auth/authenticator/config/ClientConfig";
-import {ClientAuthenticator} from "../auth/authenticator/ClientAuthenticator";
-import {UserImplicitConfig} from "../auth/authenticator/config/UserImplicitConfig";
-import {UserCredentialsConfig} from "../auth/authenticator/config/UserCredentialsConfig";
-import {UserImplicitAuthenticator} from "../auth/authenticator/UserImplicitAuthenticator";
-import {UserCredentialsAuthenticator} from "../auth/authenticator/UserCredentialsAuthenticator";
-import {Authenticator} from "../auth/authenticator/Authenticator";
-import {HttpClientInterface} from "../http/HttpClientInterface";
-import {StaticApiKeyAuthenticator} from "../auth/authenticator/StaticApiKeyAuthenticator";
-import {StaticKeyConfig} from "../auth/authenticator/config/StaticKeyConfig";
-import {DbApiClient} from "../db/DbApiClient";
-import {ApiClientInterface} from "./ApiClientInterface";
-import {CookieStorage} from "../auth/storage/CookieStorage";
-import {LocalStorage} from "../auth/storage/LocalStorage";
-import {SessionStorage} from "../auth/storage/SessionStorage";
-import {TokenStorage} from "../auth/storage/TokenStorage";
-import {EventEmitter} from "events";
+import {Config, AuthMethod, StorageMethod} from '../auth/authenticator/config/Config';
+import {ClientConfig} from '../auth/authenticator/config/ClientConfig';
+import {ClientAuthenticator} from '../auth/authenticator/ClientAuthenticator';
+import {UserImplicitConfig} from '../auth/authenticator/config/UserImplicitConfig';
+import {UserCredentialsConfig} from '../auth/authenticator/config/UserCredentialsConfig';
+import {UserImplicitAuthenticator} from '../auth/authenticator/UserImplicitAuthenticator';
+import {UserCredentialsAuthenticator} from '../auth/authenticator/UserCredentialsAuthenticator';
+import {Authenticator} from '../auth/authenticator/Authenticator';
+import {HttpClientInterface} from '../http/HttpClientInterface';
+import {StaticApiKeyAuthenticator} from '../auth/authenticator/StaticApiKeyAuthenticator';
+import {StaticKeyConfig} from '../auth/authenticator/config/StaticKeyConfig';
+import {DbApiClient} from '../db/DbApiClient';
+import {ApiClientInterface} from './ApiClientInterface';
+import {CookieStorage} from '../auth/storage/CookieStorage';
+import {LocalStorage} from '../auth/storage/LocalStorage';
+import {SessionStorage} from '../auth/storage/SessionStorage';
+import {TokenStorage} from '../auth/storage/TokenStorage';
+import {EventEmitter} from 'events';
 
 /**
  * @namespace Scandit.Client

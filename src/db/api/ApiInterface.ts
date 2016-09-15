@@ -1,5 +1,5 @@
-import {Schema} from "../schema/Schema";
-import {QueryResult} from "./QueryResult";
+import {Schema} from '../schema/Schema';
+import {QueryResult} from './QueryResult';
 
 export interface ApiInterface {
     fetchSchema(): Promise<Schema>;

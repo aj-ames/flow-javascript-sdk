@@ -1,11 +1,11 @@
-import {RequestOptions} from "http";
-import {Authenticator} from "./Authenticator";
-import {ClientConfig} from "./config/ClientConfig";
-import {HttpClientInterface} from "../../http/HttpClientInterface";
-import {OAuthHttpClient} from "../../http/OAuthHttpClient";
-import {TokenStorage} from "../storage/TokenStorage";
-import {AuthDefaults} from "./config/Config";
-import {ClientToken} from "../token/ClientToken";
+import {RequestOptions} from 'http';
+import {Authenticator} from './Authenticator';
+import {ClientConfig} from './config/ClientConfig';
+import {HttpClientInterface} from '../../http/HttpClientInterface';
+import {OAuthHttpClient} from '../../http/OAuthHttpClient';
+import {TokenStorage} from '../storage/TokenStorage';
+import {AuthDefaults} from './config/Config';
+import {ClientToken} from '../token/ClientToken';
 
 export class ClientAuthenticator extends Authenticator {
     protected config: ClientConfig;

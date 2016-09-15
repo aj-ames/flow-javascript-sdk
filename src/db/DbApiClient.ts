@@ -1,10 +1,10 @@
-import {ApiClientInterface} from "../client/ApiClientInterface";
-import {HttpClientInterface} from "../http/HttpClientInterface";
-import {Schema} from "./schema/Schema";
-import {Cls} from "./schema/Cls";
-import {makeModel, BaseModel} from "./BaseModel";
-import {ApiInterface} from "./api/ApiInterface";
-import {Api} from "./api/Api";
+import {ApiClientInterface} from '../client/ApiClientInterface';
+import {HttpClientInterface} from '../http/HttpClientInterface';
+import {Schema} from './schema/Schema';
+import {Cls} from './schema/Cls';
+import {makeModel, BaseModel} from './BaseModel';
+import {ApiInterface} from './api/ApiInterface';
+import {Api} from './api/Api';
 
 
 export class DbApiClient implements ApiClientInterface {

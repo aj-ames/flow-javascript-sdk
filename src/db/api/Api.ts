@@ -1,12 +1,12 @@
-import {HttpClientInterface, RequestOptions} from "../../http/HttpClientInterface";
-import {Schema} from "../schema/Schema";
-import {AuthDefaults} from "../../auth/authenticator/config/Config";
-import {Deserialize} from "cerialize";
-import {urlencode} from "../../utils/Http";
-import {QueryResult} from "./QueryResult";
-import {ApiInterface} from "./ApiInterface";
+import {HttpClientInterface, RequestOptions} from '../../http/HttpClientInterface';
+import {Schema} from '../schema/Schema';
+import {AuthDefaults} from '../../auth/authenticator/config/Config';
+import {Deserialize} from 'cerialize';
+import {urlencode} from '../../utils/Http';
+import {QueryResult} from './QueryResult';
+import {ApiInterface} from './ApiInterface';
 
-const API_BASE_PATH = "/api/v1/storage";
+const API_BASE_PATH = 'api/v1/storage';
 
 export class Api implements ApiInterface {
     private httpClient: HttpClientInterface;

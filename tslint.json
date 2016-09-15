@@ -112,7 +112,7 @@
     "max-line-length": [true, 140],
     "member-access": true,
     "member-ordering": true,
-    "missing-jsdoc": true,
+    // Disabled    "missing-jsdoc": true,
     "mocha-unneeded-done": true,
     "new-parens": true,
     "no-construct": true,

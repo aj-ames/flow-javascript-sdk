@@ -1,8 +1,8 @@
-import {HttpClient} from "./HttpClient";
-import {Response, RequestOptions} from "./HttpClientInterface";
-import {Token} from "../auth/token/Token";
-import {Authenticator} from "../auth/authenticator/Authenticator";
-import {RefreshableAuthenticator} from "../auth/authenticator/RefreshableAuthenticator";
+import {HttpClient} from './HttpClient';
+import {Response, RequestOptions} from './HttpClientInterface';
+import {Token} from '../auth/token/Token';
+import {Authenticator} from '../auth/authenticator/Authenticator';
+import {RefreshableAuthenticator} from '../auth/authenticator/RefreshableAuthenticator';
 
 
 export class OAuthHttpClient extends HttpClient {

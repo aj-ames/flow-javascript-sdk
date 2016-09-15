@@ -1,4 +1,4 @@
-import {HttpClientInterface, RequestOptions, Response} from "./HttpClientInterface";
+import {HttpClientInterface, RequestOptions, Response} from './HttpClientInterface';
 
 export abstract class BaseHttpClient implements HttpClientInterface {
     protected authHeader: string;

@@ -1,8 +1,8 @@
-import {Authenticator} from "./Authenticator";
-import {Token} from "../token/Token";
-import {AuthDefaults} from "./config/Config";
-import {RequestOptions} from "../../http/HttpClientInterface";
-import {ClientConfig} from "./config/ClientConfig";
+import {Authenticator} from './Authenticator';
+import {Token} from '../token/Token';
+import {AuthDefaults} from './config/Config';
+import {RequestOptions} from '../../http/HttpClientInterface';
+import {ClientConfig} from './config/ClientConfig';
 
 export abstract class RefreshableAuthenticator extends Authenticator {
 

@@ -1,9 +1,9 @@
-import {Token} from "../token/Token";
-import {HttpClientInterface} from "../../http/HttpClientInterface";
-import {TokenStorage} from "../storage/TokenStorage";
-import {Config} from "./config/Config";
-import {EventEmitter} from "events";
-import {setTimeout} from "timers";
+import {Token} from '../token/Token';
+import {HttpClientInterface} from '../../http/HttpClientInterface';
+import {TokenStorage} from '../storage/TokenStorage';
+import {Config} from './config/Config';
+import {EventEmitter} from 'events';
+import {setTimeout} from 'timers';
 
 export abstract class Authenticator extends EventEmitter {
     protected config: Config;

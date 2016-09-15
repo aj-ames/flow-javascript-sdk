@@ -1,10 +1,10 @@
-import {Authenticator} from "./Authenticator";
-import {UserImplicitConfig} from "./config/UserImplicitConfig";
-import {HttpClientInterface} from "../../http/HttpClientInterface";
-import {OAuthHttpClient} from "../../http/OAuthHttpClient";
-import {AuthDefaults} from "./config/Config";
-import {TokenStorage} from "../storage/TokenStorage";
-import {UserToken} from "../token/UserToken";
+import {Authenticator} from './Authenticator';
+import {UserImplicitConfig} from './config/UserImplicitConfig';
+import {HttpClientInterface} from '../../http/HttpClientInterface';
+import {OAuthHttpClient} from '../../http/OAuthHttpClient';
+import {AuthDefaults} from './config/Config';
+import {TokenStorage} from '../storage/TokenStorage';
+import {UserToken} from '../token/UserToken';
 
 class CallbackHashParser {
     private response: Object;

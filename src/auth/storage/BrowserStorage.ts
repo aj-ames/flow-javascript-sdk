@@ -1,5 +1,5 @@
-import {TokenStorage} from "./TokenStorage";
-import {Token} from "../token/Token";
+import {TokenStorage} from './TokenStorage';
+import {Token} from '../token/Token';
 
 const DEFAULT_STORAGE_KEY = "scandit_flow";
 

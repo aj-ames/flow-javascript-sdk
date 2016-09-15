@@ -1,4 +1,4 @@
-import {deserialize} from "cerialize";
+import {deserialize} from 'cerialize';
 
 export class Index {
     @deserialize public name: string;

@@ -1,7 +1,7 @@
-import * as axios from "axios";
-import {RequestOptions, Response} from "./HttpClientInterface";
-import {AuthDefaults} from "../auth/authenticator/config/Config";
-import {BaseHttpClient} from "./BaseHttpClient";
+import * as axios from 'axios';
+import {RequestOptions, Response} from './HttpClientInterface';
+import {AuthDefaults} from '../auth/authenticator/config/Config';
+import {BaseHttpClient} from './BaseHttpClient';
 import AxiosXHRConfig = Axios.AxiosXHRConfig;
 
 export class HttpClient extends BaseHttpClient {

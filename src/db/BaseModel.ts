@@ -1,6 +1,6 @@
-import {Cls} from "./schema/Cls";
-import {Field} from "./schema/Field";
-import {ApiInterface} from "./api/ApiInterface";
+import {Cls} from './schema/Cls';
+import {Field} from './schema/Field';
+import {ApiInterface} from './api/ApiInterface';
 
 export interface QueryOptions {
     limit?: number;

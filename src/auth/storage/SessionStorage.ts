@@ -1,4 +1,4 @@
-import {BrowserStorage} from "./BrowserStorage";
+import {BrowserStorage} from './BrowserStorage';
 
 let storage: Storage;
 if (typeof sessionStorage !== 'undefined') {

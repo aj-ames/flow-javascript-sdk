@@ -1,10 +1,10 @@
-import {UserCredentialsConfig} from "./config/UserCredentialsConfig";
-import {OAuthHttpClient} from "../../http/OAuthHttpClient";
-import {HttpClientInterface, RequestOptions} from "../../http/HttpClientInterface";
-import {AuthDefaults} from "./config/Config";
-import {TokenStorage} from "../storage/TokenStorage";
-import {UserToken} from "../token/UserToken";
-import {RefreshableAuthenticator} from "./RefreshableAuthenticator";
+import {UserCredentialsConfig} from './config/UserCredentialsConfig';
+import {OAuthHttpClient} from '../../http/OAuthHttpClient';
+import {HttpClientInterface, RequestOptions} from '../../http/HttpClientInterface';
+import {AuthDefaults} from './config/Config';
+import {TokenStorage} from '../storage/TokenStorage';
+import {UserToken} from '../token/UserToken';
+import {RefreshableAuthenticator} from './RefreshableAuthenticator';
 
 export class UserCredentialsAuthenticator extends RefreshableAuthenticator {
     protected config: UserCredentialsConfig;

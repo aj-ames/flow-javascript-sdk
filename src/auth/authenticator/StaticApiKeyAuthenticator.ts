@@ -1,8 +1,8 @@
-import {Authenticator} from "./Authenticator";
-import {HttpClientInterface} from "../../http/HttpClientInterface";
-import {HttpClient} from "../../http/HttpClient";
-import {StaticKeyConfig} from "./config/StaticKeyConfig";
-import {TokenStorage} from "../storage/TokenStorage";
+import {Authenticator} from './Authenticator';
+import {HttpClientInterface} from '../../http/HttpClientInterface';
+import {HttpClient} from '../../http/HttpClient';
+import {StaticKeyConfig} from './config/StaticKeyConfig';
+import {TokenStorage} from '../storage/TokenStorage';
 
 export class StaticApiKeyAuthenticator extends Authenticator {
     protected config: StaticKeyConfig;

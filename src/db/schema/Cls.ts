@@ -1,7 +1,7 @@
-import {Field} from "./Field";
-import {Index} from "./Index";
-import {Config} from "./Config";
-import {deserialize, deserializeAs} from "cerialize";
+import {Field} from './Field';
+import {Index} from './Index';
+import {Config} from './Config';
+import {deserialize, deserializeAs} from 'cerialize';
 
 export class Cls {
     @deserialize public name: string;
