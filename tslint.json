@@ -105,7 +105,6 @@
     "export-name": true,
     "function-name": true,
     "import-name": true,
-    "interface-name": true,
     "jsdoc-format": true,
     "max-file-line-count": true,
     "max-func-body-length": [true, 100, {"ignore-parameters-to-function-regex": "describe"}],
