@@ -57,7 +57,7 @@ export class UserImplicitAuthenticator extends Authenticator {
             });
     }
 
-    authenticate(...credentials: string[]): Promise<void> {
+    authenticate(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             let authorizationUrl: string = AuthDefaults.BASE_URL + AuthDefaults.AUTHORIZATION_PATH + '?' +
                 `response_type=token&client_id=${this.config.clientId}&redirect_uri=${encodeURIComponent(this.config.redirectUri)}`;

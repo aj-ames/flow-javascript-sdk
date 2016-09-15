@@ -25,7 +25,7 @@ export class ClientAuthenticator extends Authenticator {
             });
     }
 
-    authenticate(...credentials: string[]): Promise<void> {
+    authenticate(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             let authenticationUrl = AuthDefaults.BASE_URL + AuthDefaults.TOKEN_PATH;
             let payload: RequestOptions = <RequestOptions> {

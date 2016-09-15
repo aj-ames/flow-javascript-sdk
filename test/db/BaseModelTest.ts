@@ -155,7 +155,7 @@ describe('db.BaseModel.BaseModel', () => {
             };
             let testQuery = {testfield1: {$eq: 'test'}};
             testDbApi.getObjects = sinon.stub().resolves(testResult);
-            return subject.find(testQuery, {limit: 100, skip: 10}).should.be.fulfilled.then((objs) => {
+            return subject.find(testQuery, {limit: 100, skip: 10}).should.be.fulfilled.then(() => {
                 (<SinonStub> testDbApi.getObjects).should.have.been.calledOnce.calledWith('testcls', testQuery, {limit: 100, skip: 10});
             });
         });

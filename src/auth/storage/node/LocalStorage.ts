@@ -8,7 +8,7 @@ export class LocalStorage implements Storage {
     length: number;
 
     constructor() {
-        this.checkFile();
+        LocalStorage.checkFile();
     }
 
     clear(): void {
@@ -16,7 +16,7 @@ export class LocalStorage implements Storage {
     }
 
     getItem(key: string): any {
-        let d = this.readFile();
+        let d = LocalStorage.readFile();
         return d[key];
     }
 
@@ -25,18 +25,18 @@ export class LocalStorage implements Storage {
     }
 
     removeItem(key: string): void {
-        let d = this.readFile();
+        let d = LocalStorage.readFile();
         delete d[key];
-        this.writeFile(d);
+        LocalStorage.writeFile(d);
     }
 
     setItem(key: string, data: string): void {
-        let d = this.readFile();
+        let d = LocalStorage.readFile();
         d[key] = data;
-        this.writeFile(d);
+        LocalStorage.writeFile(d);
     }
 
-    private checkFile() {
+    private static checkFile() {
         try {
             fs.statSync(FILE);
         } catch (err) {
@@ -44,11 +44,11 @@ export class LocalStorage implements Storage {
         }
     }
 
-    private readFile() {
+    private static readFile() {
         return JSON.parse(<string>fs.readFileSync(FILE, {encoding: 'utf8'}));
     }
 
-    private writeFile(data: any) {
+    private static writeFile(data: any) {
         fs.writeFileSync(FILE, JSON.stringify(data), {mode: 600});
     }
 
