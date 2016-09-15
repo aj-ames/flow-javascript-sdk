@@ -1,5 +1,7 @@
 Scandit Flow JavaScript SDK
 -----------------------------
+[![Build Status](https://travis-ci.org/Scandit/flow-javascript-sdk.svg?branch=master)](https://travis-ci.org/Scandit/flow-javascript-sdk)
+
 The Scandit Flow JavaScript SDK is a library that helps building applications integrated with the Scandit Flow platform.
 
 Take a look at our related projects:
