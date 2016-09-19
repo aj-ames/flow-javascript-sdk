@@ -1,3 +1,3 @@
-import { ClientConfig } from "./ClientConfig";
-export interface UserCredentialsConfig extends ClientConfig {
+import { IClientConfig } from './ClientConfig';
+export interface IUserCredentialsConfig extends IClientConfig {
 }

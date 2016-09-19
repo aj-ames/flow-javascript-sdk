@@ -10,7 +10,7 @@ export abstract class Token {
         this.update(token, expires, tokenType, createdAt, refreshToken);
     }
 
-    update(token: string, expires: number, tokenType: string, createdAt?: Date, refreshToken?: string) {
+    public update(token: string, expires: number, tokenType: string, createdAt?: Date, refreshToken?: string) {
         this.token = token;
         this.createdAt = createdAt ? createdAt : new Date();
         this.expires = expires;
@@ -19,11 +19,11 @@ export abstract class Token {
         this.refreshToken = refreshToken;
     }
 
-    isExpired() : boolean {
+    public isExpired() : boolean {
         return this.expiresAt != null && this.expiresAt < new Date();
     }
 
-    isRefreshable(): boolean {
+    public isRefreshable(): boolean {
         return !!this.refreshToken;
     }
 

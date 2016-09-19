@@ -1,17 +1,19 @@
 import {BrowserStorage} from './BrowserStorage';
+import {NodeSessionStorage} from './node/NodeSessionStorage';
 
 let storage: Storage;
-if (typeof sessionStorage !== 'undefined') {
-    storage = sessionStorage;
-} else if (typeof process !== 'undefined') {
-    let NodeSessionStorage = require('./node/SessionStorage').SessionStorage;
+if (window !== undefined && window.sessionStorage !== undefined) {
+    storage = window.sessionStorage;
+} else if (process !== undefined) {
     storage = new NodeSessionStorage();
 }
 
 export class SessionStorage extends BrowserStorage {
 
     public constructor(key?: string) {
-        if (typeof storage == 'undefined') throw new ReferenceError('Local storage is not supported.');
+        if (storage === undefined) {
+            throw new ReferenceError('Local storage is not supported.');
+        }
         super(storage, key);
     }
 

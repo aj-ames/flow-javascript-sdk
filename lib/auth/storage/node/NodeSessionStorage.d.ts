@@ -1,14 +1,11 @@
-export declare class LocalStorage implements Storage {
+export declare class NodeSessionStorage implements Storage {
+    private static storage;
     length: number;
-    constructor();
     clear(): void;
     getItem(key: string): any;
-    key(index: number): string;
+    key(): string;
     removeItem(key: string): void;
     setItem(key: string, data: string): void;
-    private checkFile();
-    private readFile();
-    private writeFile(data);
     [key: string]: any;
     [index: number]: string;
 }

@@ -1,4 +1,5 @@
-import {ClientConfig} from './ClientConfig';
+import {IClientConfig} from './ClientConfig';
 
-export interface UserCredentialsConfig extends ClientConfig {
+// tslint:disable-next-line:no-empty-interfaces
+export interface IUserCredentialsConfig extends IClientConfig {
 }

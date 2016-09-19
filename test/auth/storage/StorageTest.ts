@@ -7,13 +7,13 @@ import {TokenStorage} from '../../../src/auth/storage/TokenStorage';
 const subjects = [
     CookieStorage,
     LocalStorage,
-    SessionStorage,
+    SessionStorage
 ];
 
 subjects.forEach((subjectCls) => {
-    describe(`auth.storage.${subjectCls['name']}`, () => {
-        let subject: TokenStorage = new subjectCls();
-        let testToken = new UserToken('testtoken', 1000, 'bearer', new Date(1473431171404), 'testrefreshtoken');
+    describe(`auth.storage.${subjectCls.name}`, () => {
+        const subject: TokenStorage = new subjectCls();
+        const testToken = new UserToken('testtoken', 1000, 'bearer', new Date(1473431171404), 'testrefreshtoken');
 
         it('stores the token and allows to retrieve it', () => {
             return subject.setToken(testToken)

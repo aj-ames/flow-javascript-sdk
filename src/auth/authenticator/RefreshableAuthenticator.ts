@@ -1,8 +1,8 @@
 import {Authenticator} from './Authenticator';
 import {Token} from '../token/Token';
-import {AuthDefaults} from './config/Config';
-import {RequestOptions} from '../../http/HttpClientInterface';
-import {ClientConfig} from './config/ClientConfig';
+import {authDefaults} from './config/Config';
+import {IRequestOptions} from '../../http/HttpClientInterface';
+import {IClientConfig} from './config/ClientConfig';
 
 export abstract class RefreshableAuthenticator extends Authenticator {
 
@@ -17,28 +17,29 @@ export abstract class RefreshableAuthenticator extends Authenticator {
                     })
                     .catch((err) => {
                         console.error(err.stack);
-                        reject(false)
+                        reject(false);
                     });
             }
         });
     }
 
     public refreshToken(token: Token): Promise<void> {
-        let requestUrl = AuthDefaults.BASE_URL + AuthDefaults.TOKEN_PATH;
-        let payload: RequestOptions = {
-            body: `grant_type=refresh_token&client_id=${(<ClientConfig>this.config).clientId}&client_secret=${(<ClientConfig>this.config).clientSecret}&refresh_token=${encodeURIComponent(token.refreshToken)}`,
+        const requestUrl = authDefaults.BASE_URL + authDefaults.TOKEN_PATH;
+        const payload: IRequestOptions = {
+            body: `grant_type=refresh_token&client_id=${(<IClientConfig>this.config).clientId}` +
+              `&client_secret=${(<IClientConfig>this.config).clientSecret}&refresh_token=${encodeURIComponent(token.refreshToken)}`,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         };
 
         return this.httpClient.post(requestUrl, payload).then((response) => {
-            if (response.status == 200) {
-                let tokenResponse = JSON.parse(response.body);
+            if (response.status === 200) {
+                const tokenResponse = JSON.parse(response.body);
                 token.update(
-                    tokenResponse['access_token'],
-                    tokenResponse['expires_in'],
-                    tokenResponse['token_type'],
-                    new Date(tokenResponse['created_at'] * 1000),
-                    tokenResponse['refresh_token']
+                    tokenResponse.access_token,
+                    tokenResponse.expires_in,
+                    tokenResponse.token_type,
+                    new Date(tokenResponse.created_at * 1000),
+                    tokenResponse.refresh_token
                 );
                 return this.storeToken(token);
             }

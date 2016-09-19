@@ -1,16 +1,16 @@
 import {RefreshableAuthenticator} from '../../../src/auth/authenticator/RefreshableAuthenticator';
-import {HttpClientInterface} from '../../../src/http/HttpClientInterface';
+import {IHttpClient} from '../../../src/http/HttpClientInterface';
 
 class TestAuthenticator extends RefreshableAuthenticator {
-    init(): Promise<boolean> {
+    public init(): Promise<boolean> {
         return undefined;
     }
 
-    authenticate(credentials: string): Promise<void> {
+    public authenticate(credentials: string): Promise<void> {
         return undefined;
     }
 
-    getHttpClient(): HttpClientInterface {
+    public getHttpClient(): IHttpClient {
         return undefined;
     }
 

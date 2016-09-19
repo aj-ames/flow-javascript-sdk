@@ -1,1 +1,1 @@
-export declare function urlencode(obj: {}): string;
+export declare function urlEncode(obj: {}): string;

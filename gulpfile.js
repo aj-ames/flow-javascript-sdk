@@ -59,8 +59,8 @@ gulp.task('webpack', ['compile-lib'], () => {
             },
             externals: [
                 {
-                    './node/SessionStorage': 'var undefined',
-                    './node/LocalStorage': 'var undefined'
+                    './node/NodeSessionStorage': 'var undefined',
+                    './node/NodeLocalStorage': 'var undefined'
                 }
             ],
             devtool: 'source-map'

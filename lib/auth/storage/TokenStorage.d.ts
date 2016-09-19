@@ -1,4 +1,4 @@
-import { Token } from "../token/Token";
+import { Token } from '../token/Token';
 export declare abstract class TokenStorage {
     abstract getToken(): Promise<Token>;
     abstract setToken(token: Token): Promise<void>;

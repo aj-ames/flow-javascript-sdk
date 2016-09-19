@@ -1,9 +1,9 @@
-export interface Metadata {
+export interface IMetadata {
     page: number;
     pages: number;
     total: number;
 }
-export interface QueryResult {
-    metadata: Metadata;
+export interface IQueryResult {
+    metadata: IMetadata;
     objects: {}[];
 }

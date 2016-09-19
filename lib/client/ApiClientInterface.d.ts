@@ -1,4 +1,4 @@
-import { HttpClientInterface } from "../http/HttpClientInterface";
-export interface ApiClientInterface {
-    init(httpClient: HttpClientInterface): Promise<void>;
+import { IHttpClient } from '../http/HttpClientInterface';
+export interface IApiClient {
+    init(httpClient: IHttpClient): Promise<void>;
 }

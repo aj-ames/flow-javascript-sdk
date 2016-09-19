@@ -1,5 +1,5 @@
-import {Config} from './Config';
+import {IConfig} from './Config';
 
-export interface StaticKeyConfig extends Config {
+export interface IStaticKeyConfig extends IConfig {
     key: string;
 }

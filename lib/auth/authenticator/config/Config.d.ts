@@ -1,9 +1,9 @@
-export interface Config {
+export interface IConfig {
     method: AuthMethod;
     storage: StorageMethod;
     storageKey?: string;
 }
-export declare const AuthDefaults: {
+export declare const authDefaults: {
     AUTHENTICATION_HEADER: string;
     BASE_URL: string;
     AUTHORIZATION_PATH: string;

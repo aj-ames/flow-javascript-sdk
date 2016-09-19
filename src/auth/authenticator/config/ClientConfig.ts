@@ -1,6 +1,6 @@
-import {Config} from './Config';
+import {IConfig} from './Config';
 
-export interface ClientConfig extends Config {
-    clientId: string
-    clientSecret: string
+export interface IClientConfig extends IConfig {
+    clientId: string;
+    clientSecret: string;
 }

@@ -1,13 +1,13 @@
-import { Authenticator } from "./Authenticator";
-import { UserImplicitConfig } from "./config/UserImplicitConfig";
-import { HttpClientInterface } from "../../http/HttpClientInterface";
-import { OAuthHttpClient } from "../../http/OAuthHttpClient";
-import { TokenStorage } from "../storage/TokenStorage";
+import { Authenticator } from './Authenticator';
+import { IUserImplicitConfig } from './config/UserImplicitConfig';
+import { IHttpClient } from '../../http/HttpClientInterface';
+import { OAuthHttpClient } from '../../http/OAuthHttpClient';
+import { TokenStorage } from '../storage/TokenStorage';
 export declare class UserImplicitAuthenticator extends Authenticator {
-    protected config: UserImplicitConfig;
+    protected config: IUserImplicitConfig;
     protected httpClient: OAuthHttpClient;
-    constructor(config: UserImplicitConfig, storage: TokenStorage);
+    constructor(config: IUserImplicitConfig, storage: TokenStorage);
     init(): Promise<boolean>;
-    authenticate(...credentials: string[]): Promise<void>;
-    getHttpClient(): HttpClientInterface;
+    authenticate(): Promise<void>;
+    getHttpClient(): IHttpClient;
 }

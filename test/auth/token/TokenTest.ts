@@ -1,7 +1,11 @@
 import {UserToken} from '../../../src/auth/token/UserToken';
 
 describe('Token', () => {
-    let testToken = new UserToken('testtoken', 1000, 'bearer', new Date(1473431171404), 'testrefreshtoken');
+    let testToken;
+
+    before(() => {
+        testToken = new UserToken('testtoken', 1000, 'bearer', new Date(1473431171404), 'testrefreshtoken');
+    });
 
     describe('#isExpired', () => {
         it('checks token expiresAt', () => {

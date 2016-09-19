@@ -4,16 +4,16 @@ import {makeModel, BaseModel} from '../../src/db/BaseModel';
 import {Cls} from '../../src/db/schema/Cls';
 import {Deserialize} from 'cerialize';
 import {DbApiClient} from '../../src/db/DbApiClient';
-import {ApiInterface} from '../../src/db/api/ApiInterface';
+import {IApi} from '../../src/db/api/ApiInterface';
 import SinonMock = Sinon.SinonMock;
 import SinonSandbox = Sinon.SinonSandbox;
 import SinonStub = Sinon.SinonStub;
 import {Field} from '../../src/db/schema/Field';
-import {QueryResult} from '../../src/db/api/QueryResult';
+import {IQueryResult} from '../../src/db/api/QueryResult';
 
 describe('db.BaseModel.BaseModel', () => {
     let subject: typeof BaseModel;
-    let testDbApi:ApiInterface = <ApiInterface>{};
+    let testDbApi: IApi = <IApi>{};
     let testCls = new Cls();
     testCls.name = 'TestCls';
     testCls.fields = [
@@ -107,7 +107,7 @@ describe('db.BaseModel.BaseModel', () => {
 
     describe('.find', () => {
         it('gives matching objects', () => {
-            let testResult = <QueryResult>{
+            let testResult = <IQueryResult>{
                 metadata: {page: 1, pages: 1, total: 100},
                 objects: Array.apply(null, Array(100)).map(generateTestObject)
             };
@@ -120,7 +120,7 @@ describe('db.BaseModel.BaseModel', () => {
         });
 
         it('converts all objects to the instance of the model', () => {
-            let testResult = <QueryResult>{
+            let testResult = <IQueryResult>{
                 metadata: {page: 1, pages: 1, total: 100},
                 objects: Array.apply(null, Array(100)).map(generateTestObject)
             };
@@ -137,7 +137,7 @@ describe('db.BaseModel.BaseModel', () => {
         });
 
         it('gives empty array if no objects', () => {
-            let testResult = <QueryResult>{
+            let testResult = <IQueryResult>{
                 metadata: {page: 1, pages: 1, total: 0},
                 objects: []
             };
@@ -149,7 +149,7 @@ describe('db.BaseModel.BaseModel', () => {
         });
 
         it('allows to pass additional options', () => {
-            let testResult = <QueryResult>{
+            let testResult = <IQueryResult>{
                 metadata: {page: 1, pages: 1, total: 0},
                 objects: []
             };

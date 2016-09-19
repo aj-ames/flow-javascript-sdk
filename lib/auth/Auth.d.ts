@@ -1,4 +1,4 @@
-import { AuthMethod as Method, StorageMethod as Storage } from "./authenticator/config/Config";
+import { AuthMethod as Method, StorageMethod as Storage } from './authenticator/config/Config';
 /**
  * @namespace Scandit.Auth
  */

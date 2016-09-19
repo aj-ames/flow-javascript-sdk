@@ -4,36 +4,36 @@ import * as path from 'path';
 
 const FILE = path.join(os.tmpdir(), '.flow-sdk-storage');
 
-export class LocalStorage implements Storage {
-    length: number;
+export class NodeLocalStorage implements Storage {
+    public length: number;
 
     constructor() {
-        LocalStorage.checkFile();
+        NodeLocalStorage.checkFile();
     }
 
-    clear(): void {
+    public clear(): void {
         throw new Error('Not implemented');
     }
 
-    getItem(key: string): any {
-        let d = LocalStorage.readFile();
+    public getItem(key: string): any {
+        const d = NodeLocalStorage.readFile();
         return d[key];
     }
 
-    key(index: number): string {
+    public key(): string {
         return undefined;
     }
 
-    removeItem(key: string): void {
-        let d = LocalStorage.readFile();
+    public removeItem(key: string): void {
+        const d = NodeLocalStorage.readFile();
         delete d[key];
-        LocalStorage.writeFile(d);
+        NodeLocalStorage.writeFile(d);
     }
 
-    setItem(key: string, data: string): void {
-        let d = LocalStorage.readFile();
+    public setItem(key: string, data: string): void {
+        const d = NodeLocalStorage.readFile();
         d[key] = data;
-        LocalStorage.writeFile(d);
+        NodeLocalStorage.writeFile(d);
     }
 
     private static checkFile() {
@@ -54,5 +54,4 @@ export class LocalStorage implements Storage {
 
     [key: string]: any
     [index: number]: string;
-
 }

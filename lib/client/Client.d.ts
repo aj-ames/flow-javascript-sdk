@@ -1,19 +1,19 @@
-import { Config } from "../auth/authenticator/config/Config";
-import { DbApiClient } from "../db/DbApiClient";
-import { EventEmitter } from "events";
+import { IConfig } from '../auth/authenticator/config/Config';
+import { DbApiClient } from '../db/DbApiClient';
+import { EventEmitter } from 'events';
 /**
  * @namespace Scandit.Client
  */
-export default class Client extends EventEmitter {
+export declare class Client extends EventEmitter {
     private authenticator;
     private httpClient;
     private apiClients;
     Db: DbApiClient;
-    constructor(config: Config);
+    constructor(config: IConfig);
     /**
      * Initializes the client
      *
-     * @returns {Promise<boolean>}
+     * @returns {Promise<boolean>} Promise resolving on successful initialization of the client
      */
     init(): Promise<boolean>;
     authenticate(...credentials: string[]): Promise<void>;

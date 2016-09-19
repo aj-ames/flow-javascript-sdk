@@ -1,4 +1,4 @@
-export interface RequestOptions {
+export interface IRequestOptions {
     body?: string | {};
     query?: {};
     headers?: {};
@@ -8,19 +8,22 @@ export interface RequestOptions {
     connectionTimeout?: number;
 }
 
-export interface Response {
+export interface IResponse {
     status: number;
     body: string;
-    headers: {};
+    headers: {
+        'Content-Type'?: string,
+        Location?: string
+    };
 }
 
-export interface HttpClientInterface {
-    get(url: string, options?: RequestOptions): Promise<Response>
-    post(url: string, options?: RequestOptions): Promise<Response>
-    put(url: string, options?: RequestOptions): Promise<Response>
-    options(url: string, options?: RequestOptions): Promise<any>;
-    request(method: string, url: string, options?: RequestOptions): Promise<Response>
-    getAuthenticationHeader(): string
-    hasAuthenticationInfo(): boolean
-    setAuthenticationHeader(authHeader: string): void
+export interface IHttpClient {
+    get(url: string, options?: IRequestOptions): Promise<IResponse>;
+    post(url: string, options?: IRequestOptions): Promise<IResponse>;
+    put(url: string, options?: IRequestOptions): Promise<IResponse>;
+    options(url: string, options?: IRequestOptions): Promise<any>;
+    request(method: string, url: string, options?: IRequestOptions): Promise<IResponse>;
+    getAuthenticationHeader(): string;
+    hasAuthenticationInfo(): boolean;
+    setAuthenticationHeader(authHeader: string): void;
 }

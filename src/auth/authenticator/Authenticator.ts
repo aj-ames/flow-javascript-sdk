@@ -1,38 +1,40 @@
 import {Token} from '../token/Token';
-import {HttpClientInterface} from '../../http/HttpClientInterface';
+import {IHttpClient} from '../../http/HttpClientInterface';
 import {TokenStorage} from '../storage/TokenStorage';
-import {Config} from './config/Config';
+import {IConfig} from './config/Config';
 import {EventEmitter} from 'events';
 import {setTimeout} from 'timers';
 
 export abstract class Authenticator extends EventEmitter {
-    protected config: Config;
-    protected httpClient: HttpClientInterface;
+    protected config: IConfig;
+    protected httpClient: IHttpClient;
     protected storage: TokenStorage;
     private tokenWatchTimeout: any;
 
-    constructor(config: Config, storage: TokenStorage) {
+    constructor(config: IConfig, storage: TokenStorage) {
         super();
         this.config = config;
         this.storage = storage;
     }
 
-    abstract init(): Promise<boolean>;
-    abstract authenticate(...credentials: string[]): Promise<void>;
-    abstract getHttpClient(): HttpClientInterface;
+    public abstract init(): Promise<boolean>;
+    public abstract authenticate(...credentials: string[]): Promise<void>;
+    public abstract getHttpClient(): IHttpClient;
 
     /**
      * Tries to load the token from storage and checks the expiration
      *
-     * @param cls Expected type of the token
-     * @returns {Promise<Token>}
+     * @param {Token} cls Expected type of the token
+     * @returns {Promise<Token>} Promise resolving to the loaded token
      */
     protected loadToken(cls: typeof Token): Promise<Token> {
         let loadedToken: Token;
         return this.storage.getToken()
             .then((token) => {
                 loadedToken = token;
-                if (!token || token.constructor != cls) return false;
+                if (!token || token.constructor !== cls) {
+                    return false;
+                }
                 return this.validateToken(token);
             })
             .then((isValid) => {
@@ -47,8 +49,8 @@ export abstract class Authenticator extends EventEmitter {
     /**
      * Saves token in the storage
      *
-     * @param {Token} token
-     * @returns {Promise<void>}
+     * @param {Token} token Token to be saved
+     * @returns {Promise<void>} Promise resolving on successful storage of token
      */
     protected storeToken(token: Token): Promise<void> {
         this.emit('auth.update', token);
@@ -59,7 +61,7 @@ export abstract class Authenticator extends EventEmitter {
     /**
      * Removes saves token
      *
-     * @returns {Promise<void>}
+     * @returns {Promise<void>} Promise resolving on successful removal of token
      */
     protected logout(): Promise<void> {
         //TODO: revoke token
@@ -74,11 +76,11 @@ export abstract class Authenticator extends EventEmitter {
 
     private watchToken(token: Token) {
         this.unwatchToken();
-        if (!token || !token.expiresAt) return;
-        let diff = (token.expiresAt.getTime() - new Date().getTime());
-        this.tokenWatchTimeout = setTimeout(() => {
-            this.emit('auth.expire', token);
-        }, diff < 0 ? 0 : diff);
+        if (!token || !token.expiresAt) {
+            return;
+        }
+        const diff = (token.expiresAt.getTime() - new Date().getTime());
+        this.tokenWatchTimeout = setTimeout(() => { this.emit('auth.expire', token); }, diff < 0 ? 0 : diff);
     }
 
     private unwatchToken() {

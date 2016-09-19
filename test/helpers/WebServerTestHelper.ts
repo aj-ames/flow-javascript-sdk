@@ -5,7 +5,7 @@ export class WebServerTestHelper {
     private static server: http.Server;
     private static requests: any[] = [];
 
-    static start() {
+    public static start() {
         if (this.server != null) {
             this.stop();
         }
@@ -17,7 +17,7 @@ export class WebServerTestHelper {
         this.server.listen(this.PORT);
     }
 
-    static stop(cb?: () => void) {
+    public static stop(cb?: () => void) {
         this.server.close(() => {
             this.server = null;
             if (cb) {
@@ -26,12 +26,12 @@ export class WebServerTestHelper {
         });
     }
 
-    static shouldReceiveRequest(method: string, path: string) {
+    public static shouldReceiveRequest(method: string, path: string) {
         let req;
         if (this.requests.length > 0) {
             req = this.requests[this.requests.length - 1];
         }
-        if (req == null || req[0] != method || req[1] != path) {
+        if (req == null || req[0] !== method || req[1] !== path) {
             throw new Error(`Expected to receive ${method} request on ${path}`);
         }
     }

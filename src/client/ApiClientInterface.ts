@@ -1,6 +1,5 @@
-import {HttpClientInterface} from '../http/HttpClientInterface';
+import {IHttpClient} from '../http/HttpClientInterface';
 
-
-export interface ApiClientInterface {
-    init(httpClient: HttpClientInterface): Promise<void>;
+export interface IApiClient {
+    init(httpClient: IHttpClient): Promise<void>;
 }

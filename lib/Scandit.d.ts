@@ -1,5 +1,5 @@
-import Client from "./client/Client";
-import * as Auth from "./auth/Auth";
+import * as Auth from './auth/Auth';
+import { Client } from './client/Client';
 /**
  * Main API namespace
  *

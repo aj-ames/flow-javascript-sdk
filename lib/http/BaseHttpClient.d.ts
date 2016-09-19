@@ -1,12 +1,12 @@
-import { HttpClientInterface, RequestOptions, Response } from "./HttpClientInterface";
-export declare abstract class BaseHttpClient implements HttpClientInterface {
+import { IHttpClient, IRequestOptions, IResponse } from './HttpClientInterface';
+export declare abstract class BaseHttpClient implements IHttpClient {
     protected authHeader: string;
-    get(url: string, options?: RequestOptions): Promise<Response>;
-    options(url: string, options?: RequestOptions): Promise<Response>;
-    post(url: string, options?: RequestOptions): Promise<Response>;
-    put(url: string, options?: RequestOptions): Promise<Response>;
+    get(url: string, options?: IRequestOptions): Promise<IResponse>;
+    options(url: string, options?: IRequestOptions): Promise<IResponse>;
+    post(url: string, options?: IRequestOptions): Promise<IResponse>;
+    put(url: string, options?: IRequestOptions): Promise<IResponse>;
     setAuthenticationHeader(authHeader: string): void;
     getAuthenticationHeader(): string;
     hasAuthenticationInfo(): boolean;
-    abstract request(method: string, url: string, options?: RequestOptions): Promise<Response>;
+    abstract request(method: string, url: string, options?: IRequestOptions): Promise<IResponse>;
 }

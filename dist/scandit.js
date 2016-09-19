@@ -7,7 +7,7 @@
 		exports["Scandit"] = factory(require("undefined"));
 	else
 		root["Scandit"] = factory(root["undefined"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_55__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_56__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -55,10 +55,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var Client_1 = __webpack_require__(1);
-	exports.Client = Client_1.default;
-	var Auth = __webpack_require__(57);
+	var Auth = __webpack_require__(1);
 	exports.Auth = Auth;
+	var Client_1 = __webpack_require__(4);
+	exports.Client = Client_1.Client;
 	/**
 	 * Main API namespace
 	 *
@@ -71,130 +71,33 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var __extends = (this && this.__extends) || function (d, b) {
-	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-	    function __() { this.constructor = d; }
-	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-	};
 	var Config_1 = __webpack_require__(2);
-	var ClientAuthenticator_1 = __webpack_require__(4);
-	var UserImplicitAuthenticator_1 = __webpack_require__(36);
-	var UserCredentialsAuthenticator_1 = __webpack_require__(38);
-	var StaticApiKeyAuthenticator_1 = __webpack_require__(39);
-	var DbApiClient_1 = __webpack_require__(40);
-	var CookieStorage_1 = __webpack_require__(51);
-	var LocalStorage_1 = __webpack_require__(53);
-	var SessionStorage_1 = __webpack_require__(56);
-	var events_1 = __webpack_require__(6);
+	exports.Method = Config_1.AuthMethod;
+	exports.Storage = Config_1.StorageMethod;
 	/**
-	 * @namespace Scandit.Client
+	 * @namespace Scandit.Auth
 	 */
-	var Client = (function (_super) {
-	    __extends(Client, _super);
-	    function Client(config) {
-	        var _this = this;
-	        _super.call(this);
-	        var storage;
-	        switch (config.storage == undefined || config.storage == null ? Config_1.StorageMethod.LOCAL_STORAGE : config.storage) {
-	            case Config_1.StorageMethod.COOKIE_STORAGE:
-	                storage = new CookieStorage_1.CookieStorage(config.storageKey);
-	                break;
-	            case Config_1.StorageMethod.LOCAL_STORAGE:
-	                storage = new LocalStorage_1.LocalStorage(config.storageKey);
-	                break;
-	            case Config_1.StorageMethod.SESSION_STORAGE:
-	                storage = new SessionStorage_1.SessionStorage(config.storageKey);
-	                break;
-	            case Config_1.StorageMethod.NO_STORAGE:
-	                storage = null;
-	                break;
-	            default:
-	                throw new ReferenceError("Invalid config provided - unknown storage");
-	        }
-	        switch (config.method) {
-	            case Config_1.AuthMethod.STATIC_KEY:
-	                this.authenticator = new StaticApiKeyAuthenticator_1.StaticApiKeyAuthenticator(config, storage);
-	                break;
-	            case Config_1.AuthMethod.CLIENT:
-	                this.authenticator = new ClientAuthenticator_1.ClientAuthenticator(config, storage);
-	                break;
-	            case Config_1.AuthMethod.USER_IMPLICIT:
-	                this.authenticator = new UserImplicitAuthenticator_1.UserImplicitAuthenticator(config, storage);
-	                break;
-	            case Config_1.AuthMethod.USER_CREDENTIALS:
-	                this.authenticator = new UserCredentialsAuthenticator_1.UserCredentialsAuthenticator(config, storage);
-	                break;
-	            default:
-	                throw new ReferenceError("Invalid config provided - unknown method");
-	        }
-	        this.authenticator.on('auth.login', function (ctx) { _this.emit('auth.login', ctx); });
-	        this.authenticator.on('auth.logout', function (ctx) { _this.emit('auth.logout', ctx); });
-	        this.authenticator.on('auth.expire', function (ctx) { _this.emit('auth.expire', ctx); });
-	        this.authenticator.on('auth.update', function (ctx) { _this.emit('auth.update', ctx); });
-	        this.Db = new DbApiClient_1.DbApiClient();
-	        this.apiClients = [
-	            this.Db,
-	        ];
-	        this.httpClient = this.authenticator.getHttpClient();
-	    }
-	    /**
-	     * Initializes the client
-	     *
-	     * @returns {Promise<boolean>}
-	     */
-	    Client.prototype.init = function () {
-	        var _this = this;
-	        var isAuthenticated = false;
-	        return this.authenticator.init()
-	            .then(function (authStatus) {
-	            isAuthenticated = authStatus;
-	            if (!isAuthenticated)
-	                return;
-	            return Promise.all(_this.apiClients.map(function (c) { return c.init(_this.httpClient); }));
-	        })
-	            .then(function () {
-	            _this.emit('init', isAuthenticated);
-	            return isAuthenticated;
-	        });
-	    };
-	    Client.prototype.authenticate = function () {
-	        var _this = this;
-	        var credentials = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            credentials[_i - 0] = arguments[_i];
-	        }
-	        if (!this.authenticator)
-	            throw new ReferenceError("Provider is not configured.");
-	        return this.authenticator.authenticate.apply(this.authenticator, credentials)
-	            .then(function () {
-	            return _this.init();
-	        });
-	    };
-	    return Client;
-	}(events_1.EventEmitter));
-	Object.defineProperty(exports, "__esModule", { value: true });
-	exports.default = Client;
-	//# sourceMappingURL=Client.js.map
+	//# sourceMappingURL=Auth.js.map
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
-	exports.AuthDefaults = {
-	    AUTHENTICATION_HEADER: "Authorization",
+	exports.authDefaults = {
+	    AUTHENTICATION_HEADER: 'Authorization',
 	    BASE_URL: (function () {
 	        var baseUrl;
 	        if (process) {
-	            baseUrl = process.env['BASE_URL'];
+	            baseUrl = process.env.BASE_URL;
 	        }
 	        else if (window) {
-	            baseUrl = window['BASE_URL'];
+	            baseUrl = window.BASE_URL;
 	        }
 	        return baseUrl ? baseUrl : 'https://scandium.scandit.com';
 	    })(),
 	    AUTHORIZATION_PATH: '/api/v1/auth/oauth2/authorize',
-	    TOKEN_PATH: '/api/v1/auth/oauth2/token',
+	    TOKEN_PATH: '/api/v1/auth/oauth2/token'
 	};
 	(function (AuthMethod) {
 	    AuthMethod[AuthMethod["CLIENT"] = 0] = "CLIENT";
@@ -409,10 +312,121 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var Authenticator_1 = __webpack_require__(5);
-	var OAuthHttpClient_1 = __webpack_require__(8);
 	var Config_1 = __webpack_require__(2);
-	var ClientToken_1 = __webpack_require__(34);
+	var ClientAuthenticator_1 = __webpack_require__(5);
+	var UserImplicitAuthenticator_1 = __webpack_require__(37);
+	var UserCredentialsAuthenticator_1 = __webpack_require__(39);
+	var StaticApiKeyAuthenticator_1 = __webpack_require__(40);
+	var DbApiClient_1 = __webpack_require__(41);
+	var CookieStorage_1 = __webpack_require__(52);
+	var LocalStorage_1 = __webpack_require__(54);
+	var SessionStorage_1 = __webpack_require__(57);
+	var events_1 = __webpack_require__(7);
+	/**
+	 * @namespace Scandit.Client
+	 */
+	var Client = (function (_super) {
+	    __extends(Client, _super);
+	    function Client(config) {
+	        var _this = this;
+	        _super.call(this);
+	        var storage;
+	        switch (config.storage === undefined || config.storage === null ? Config_1.StorageMethod.LOCAL_STORAGE : config.storage) {
+	            case Config_1.StorageMethod.COOKIE_STORAGE:
+	                storage = new CookieStorage_1.CookieStorage(config.storageKey);
+	                break;
+	            case Config_1.StorageMethod.LOCAL_STORAGE:
+	                storage = new LocalStorage_1.LocalStorage(config.storageKey);
+	                break;
+	            case Config_1.StorageMethod.SESSION_STORAGE:
+	                storage = new SessionStorage_1.SessionStorage(config.storageKey);
+	                break;
+	            case Config_1.StorageMethod.NO_STORAGE:
+	                storage = null;
+	                break;
+	            default:
+	                throw new ReferenceError('Invalid config provided - unknown storage');
+	        }
+	        switch (config.method) {
+	            case Config_1.AuthMethod.STATIC_KEY:
+	                this.authenticator = new StaticApiKeyAuthenticator_1.StaticApiKeyAuthenticator(config, storage);
+	                break;
+	            case Config_1.AuthMethod.CLIENT:
+	                this.authenticator = new ClientAuthenticator_1.ClientAuthenticator(config, storage);
+	                break;
+	            case Config_1.AuthMethod.USER_IMPLICIT:
+	                this.authenticator = new UserImplicitAuthenticator_1.UserImplicitAuthenticator(config, storage);
+	                break;
+	            case Config_1.AuthMethod.USER_CREDENTIALS:
+	                this.authenticator = new UserCredentialsAuthenticator_1.UserCredentialsAuthenticator(config, storage);
+	                break;
+	            default:
+	                throw new ReferenceError('Invalid config provided - unknown method');
+	        }
+	        this.authenticator.on('auth.login', function (ctx) { _this.emit('auth.login', ctx); });
+	        this.authenticator.on('auth.logout', function (ctx) { _this.emit('auth.logout', ctx); });
+	        this.authenticator.on('auth.expire', function (ctx) { _this.emit('auth.expire', ctx); });
+	        this.authenticator.on('auth.update', function (ctx) { _this.emit('auth.update', ctx); });
+	        this.Db = new DbApiClient_1.DbApiClient();
+	        this.apiClients = [
+	            this.Db
+	        ];
+	        this.httpClient = this.authenticator.getHttpClient();
+	    }
+	    /**
+	     * Initializes the client
+	     *
+	     * @returns {Promise<boolean>} Promise resolving on successful initialization of the client
+	     */
+	    Client.prototype.init = function () {
+	        var _this = this;
+	        var isAuthenticated = false;
+	        return this.authenticator.init()
+	            .then(function (authStatus) {
+	            isAuthenticated = authStatus;
+	            if (!isAuthenticated) {
+	                return;
+	            }
+	            return Promise.all(_this.apiClients.map(function (c) { return c.init(_this.httpClient); }));
+	        })
+	            .then(function () {
+	            _this.emit('init', isAuthenticated);
+	            return isAuthenticated;
+	        });
+	    };
+	    Client.prototype.authenticate = function () {
+	        var _this = this;
+	        var credentials = [];
+	        for (var _i = 0; _i < arguments.length; _i++) {
+	            credentials[_i - 0] = arguments[_i];
+	        }
+	        if (!this.authenticator) {
+	            throw new ReferenceError('Provider is not configured.');
+	        }
+	        return this.authenticator.authenticate.apply(this.authenticator, credentials)
+	            .then(function () {
+	            return _this.init();
+	        });
+	    };
+	    return Client;
+	}(events_1.EventEmitter));
+	exports.Client = Client;
+	//# sourceMappingURL=Client.js.map
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __extends = (this && this.__extends) || function (d, b) {
+	    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+	    function __() { this.constructor = d; }
+	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+	};
+	var Authenticator_1 = __webpack_require__(6);
+	var OAuthHttpClient_1 = __webpack_require__(9);
+	var Config_1 = __webpack_require__(2);
+	var ClientToken_1 = __webpack_require__(35);
 	var ClientAuthenticator = (function (_super) {
 	    __extends(ClientAuthenticator, _super);
 	    function ClientAuthenticator(config, storage) {
@@ -424,28 +438,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //TODO: try to refresh
 	        return this.loadToken(ClientToken_1.ClientToken)
 	            .then(function (token) {
-	            if (token)
+	            if (token) {
 	                _this.httpClient.setAccessToken(token);
+	            }
 	            return token ? true : false;
 	        });
 	    };
 	    ClientAuthenticator.prototype.authenticate = function () {
 	        var _this = this;
-	        var credentials = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            credentials[_i - 0] = arguments[_i];
-	        }
 	        return new Promise(function (resolve, reject) {
-	            var authenticationUrl = Config_1.AuthDefaults.BASE_URL + Config_1.AuthDefaults.TOKEN_PATH;
+	            var authenticationUrl = Config_1.authDefaults.BASE_URL + Config_1.authDefaults.TOKEN_PATH;
 	            var payload = {
 	                body: "grant_type=client_credentials&client_id=" + _this.config.clientId + "&client_secret=" + _this.config.clientSecret,
 	                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	            };
 	            _this.httpClient.setAccessToken(null);
 	            _this.httpClient.post(authenticationUrl, payload).then(function (response) {
-	                if (response.status == 200) {
+	                if (response.status === 200) {
 	                    var tokenResponse = JSON.parse(response.body);
-	                    var token_1 = new ClientToken_1.ClientToken(tokenResponse['access_token'], tokenResponse['expires_in'], tokenResponse['token_type'], new Date(tokenResponse['created_at'] * 1000), tokenResponse['refresh_token']);
+	                    var token_1 = new ClientToken_1.ClientToken(tokenResponse.access_token, tokenResponse.expires_in, tokenResponse.token_type, new Date(tokenResponse.created_at * 1000), tokenResponse.refresh_token);
 	                    _this.httpClient.setAccessToken(token_1);
 	                    _this.storeToken(token_1)
 	                        .then(function () {
@@ -471,7 +482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=ClientAuthenticator.js.map
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -480,8 +491,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var events_1 = __webpack_require__(6);
-	var timers_1 = __webpack_require__(7);
+	var events_1 = __webpack_require__(7);
+	var timers_1 = __webpack_require__(8);
 	var Authenticator = (function (_super) {
 	    __extends(Authenticator, _super);
 	    function Authenticator(config, storage) {
@@ -492,8 +503,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Tries to load the token from storage and checks the expiration
 	     *
-	     * @param cls Expected type of the token
-	     * @returns {Promise<Token>}
+	     * @param {Token} cls Expected type of the token
+	     * @returns {Promise<Token>} Promise resolving to the loaded token
 	     */
 	    Authenticator.prototype.loadToken = function (cls) {
 	        var _this = this;
@@ -501,8 +512,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this.storage.getToken()
 	            .then(function (token) {
 	            loadedToken = token;
-	            if (!token || token.constructor != cls)
+	            if (!token || token.constructor !== cls) {
 	                return false;
+	            }
 	            return _this.validateToken(token);
 	        })
 	            .then(function (isValid) {
@@ -516,8 +528,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Saves token in the storage
 	     *
-	     * @param {Token} token
-	     * @returns {Promise<void>}
+	     * @param {Token} token Token to be saved
+	     * @returns {Promise<void>} Promise resolving on successful storage of token
 	     */
 	    Authenticator.prototype.storeToken = function (token) {
 	        this.emit('auth.update', token);
@@ -527,7 +539,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    /**
 	     * Removes saves token
 	     *
-	     * @returns {Promise<void>}
+	     * @returns {Promise<void>} Promise resolving on successful removal of token
 	     */
 	    Authenticator.prototype.logout = function () {
 	        //TODO: revoke token
@@ -541,12 +553,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Authenticator.prototype.watchToken = function (token) {
 	        var _this = this;
 	        this.unwatchToken();
-	        if (!token || !token.expiresAt)
+	        if (!token || !token.expiresAt) {
 	            return;
+	        }
 	        var diff = (token.expiresAt.getTime() - new Date().getTime());
-	        this.tokenWatchTimeout = timers_1.setTimeout(function () {
-	            _this.emit('auth.expire', token);
-	        }, diff < 0 ? 0 : diff);
+	        this.tokenWatchTimeout = timers_1.setTimeout(function () { _this.emit('auth.expire', token); }, diff < 0 ? 0 : diff);
 	    };
 	    Authenticator.prototype.unwatchToken = function () {
 	        if (this.tokenWatchTimeout) {
@@ -560,7 +571,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=Authenticator.js.map
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -868,7 +879,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(3).nextTick;
@@ -947,10 +958,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7).setImmediate, __webpack_require__(7).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8).setImmediate, __webpack_require__(8).clearImmediate))
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -959,8 +970,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var HttpClient_1 = __webpack_require__(9);
-	var RefreshableAuthenticator_1 = __webpack_require__(33);
+	var HttpClient_1 = __webpack_require__(10);
+	var RefreshableAuthenticator_1 = __webpack_require__(34);
 	var OAuthHttpClient = (function (_super) {
 	    __extends(OAuthHttpClient, _super);
 	    function OAuthHttpClient(authenticator) {
@@ -971,7 +982,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = this;
 	        return _super.prototype.request.call(this, method, url, options)
 	            .catch(function (response) {
-	            if (response.status == 401 && _this.token && _this.token.isExpired() && _this.token.isRefreshable() && _this.authenticator instanceof RefreshableAuthenticator_1.RefreshableAuthenticator) {
+	            if (response.status === 401 && _this.token && _this.token.isExpired() &&
+	                _this.token.isRefreshable() && _this.authenticator instanceof RefreshableAuthenticator_1.RefreshableAuthenticator) {
 	                var token_1 = _this.token;
 	                _this.token = null;
 	                return _this.authenticator.refreshToken(token_1)
@@ -999,7 +1011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=OAuthHttpClient.js.map
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1008,9 +1020,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var axios = __webpack_require__(10);
+	var axios = __webpack_require__(11);
 	var Config_1 = __webpack_require__(2);
-	var BaseHttpClient_1 = __webpack_require__(32);
+	var BaseHttpClient_1 = __webpack_require__(33);
 	var HttpClient = (function (_super) {
 	    __extends(HttpClient, _super);
 	    function HttpClient() {
@@ -1024,26 +1036,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	                method: method,
 	                url: url,
 	                responseType: 'text',
-	                transformResponse: function (d) { return typeof d == 'string' ? d : "" + d; }
+	                transformResponse: function (d) { return typeof d === 'string' ? d : "" + d; }
 	            };
 	            if (_this.hasAuthenticationInfo()) {
 	                options.headers = options.headers || {};
-	                options.headers[Config_1.AuthDefaults.AUTHENTICATION_HEADER] = _this.getAuthenticationHeader();
+	                options.headers[Config_1.authDefaults.AUTHENTICATION_HEADER] = _this.getAuthenticationHeader();
 	            }
-	            if (options.body)
-	                requestOptions.data = typeof options.body == 'string' ? options.body : JSON.stringify(options.body);
-	            if (options.query)
+	            if (options.body) {
+	                requestOptions.data = typeof options.body === 'string' ? options.body : JSON.stringify(options.body);
+	            }
+	            if (options.query) {
 	                requestOptions.params = options.query;
-	            if (options.headers)
+	            }
+	            if (options.headers) {
 	                requestOptions.headers = options.headers;
-	            if (options.files)
+	            }
+	            if (options.files) {
 	                throw new Error('Not implemented');
-	            if (options.formData)
+	            }
+	            if (options.formData) {
 	                throw new Error('Not implemented');
-	            if (options.timeout)
+	            }
+	            if (options.timeout) {
 	                requestOptions.timeout = options.timeout;
-	            if (options.connectionTimeout)
+	            }
+	            if (options.connectionTimeout) {
 	                throw new Error('Not implemented');
+	            }
 	            axios(requestOptions)
 	                .then(function (response) {
 	                var finalResponse = {
@@ -1069,20 +1088,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=HttpClient.js.map
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(11);
+	module.exports = __webpack_require__(12);
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
-	var bind = __webpack_require__(13);
-	var Axios = __webpack_require__(14);
+	var utils = __webpack_require__(13);
+	var bind = __webpack_require__(14);
+	var Axios = __webpack_require__(15);
 	
 	/**
 	 * Create an instance of Axios
@@ -1118,7 +1137,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(31);
+	axios.spread = __webpack_require__(32);
 	
 	module.exports = axios;
 	
@@ -1127,12 +1146,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var bind = __webpack_require__(13);
+	var bind = __webpack_require__(14);
 	
 	/*global toString:true*/
 	
@@ -1432,7 +1451,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1449,17 +1468,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var defaults = __webpack_require__(15);
-	var utils = __webpack_require__(12);
-	var InterceptorManager = __webpack_require__(17);
-	var dispatchRequest = __webpack_require__(18);
-	var isAbsoluteURL = __webpack_require__(29);
-	var combineURLs = __webpack_require__(30);
+	var defaults = __webpack_require__(16);
+	var utils = __webpack_require__(13);
+	var InterceptorManager = __webpack_require__(18);
+	var dispatchRequest = __webpack_require__(19);
+	var isAbsoluteURL = __webpack_require__(30);
+	var combineURLs = __webpack_require__(31);
 	
 	/**
 	 * Create a new instance of Axios
@@ -1540,13 +1559,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
-	var normalizeHeaderName = __webpack_require__(16);
+	var utils = __webpack_require__(13);
+	var normalizeHeaderName = __webpack_require__(17);
 	
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -1618,12 +1637,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
+	var utils = __webpack_require__(13);
 	
 	module.exports = function normalizeHeaderName(headers, normalizedName) {
 	  utils.forEach(headers, function processHeader(value, name) {
@@ -1636,12 +1655,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
+	var utils = __webpack_require__(13);
 	
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -1694,13 +1713,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(12);
-	var transformData = __webpack_require__(19);
+	var utils = __webpack_require__(13);
+	var transformData = __webpack_require__(20);
 	
 	/**
 	 * Dispatch a request to the server using whichever adapter
@@ -1741,10 +1760,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    adapter = config.adapter;
 	  } else if (typeof XMLHttpRequest !== 'undefined') {
 	    // For browsers use XHR adapter
-	    adapter = __webpack_require__(20);
+	    adapter = __webpack_require__(21);
 	  } else if (typeof process !== 'undefined') {
 	    // For node use HTTP adapter
-	    adapter = __webpack_require__(20);
+	    adapter = __webpack_require__(21);
 	  }
 	
 	  return Promise.resolve(config)
@@ -1776,12 +1795,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
+	var utils = __webpack_require__(13);
 	
 	/**
 	 * Transform the data for a request or a response
@@ -1802,18 +1821,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 	
-	var utils = __webpack_require__(12);
-	var settle = __webpack_require__(21);
-	var buildURL = __webpack_require__(24);
-	var parseHeaders = __webpack_require__(25);
-	var isURLSameOrigin = __webpack_require__(26);
-	var createError = __webpack_require__(22);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(27);
+	var utils = __webpack_require__(13);
+	var settle = __webpack_require__(22);
+	var buildURL = __webpack_require__(25);
+	var parseHeaders = __webpack_require__(26);
+	var isURLSameOrigin = __webpack_require__(27);
+	var createError = __webpack_require__(23);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(28);
 	
 	module.exports = function xhrAdapter(config) {
 	  return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1907,7 +1926,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // This is only done if running in a standard browser environment.
 	    // Specifically not if we're in a web worker, or react-native.
 	    if (utils.isStandardBrowserEnv()) {
-	      var cookies = __webpack_require__(28);
+	      var cookies = __webpack_require__(29);
 	
 	      // Add xsrf header
 	      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1971,12 +1990,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var createError = __webpack_require__(22);
+	var createError = __webpack_require__(23);
 	
 	/**
 	 * Resolve or reject a Promise based on response status.
@@ -2002,12 +2021,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var enhanceError = __webpack_require__(23);
+	var enhanceError = __webpack_require__(24);
 	
 	/**
 	 * Create an Error with the specified message, config, error code, and response.
@@ -2025,7 +2044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2050,12 +2069,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
+	var utils = __webpack_require__(13);
 	
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -2124,12 +2143,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
+	var utils = __webpack_require__(13);
 	
 	/**
 	 * Parse headers into an object
@@ -2167,12 +2186,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
+	var utils = __webpack_require__(13);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -2241,7 +2260,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 27 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2283,12 +2302,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var utils = __webpack_require__(12);
+	var utils = __webpack_require__(13);
 	
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -2342,7 +2361,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2362,7 +2381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2380,7 +2399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -2413,13 +2432,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	"use strict";
 	var BaseHttpClient = (function () {
 	    function BaseHttpClient() {
 	    }
+	    // tslint:disable-next-line:no-reserved-keywords
 	    BaseHttpClient.prototype.get = function (url, options) {
 	        return this.request('GET', url, options);
 	    };
@@ -2447,7 +2467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=BaseHttpClient.js.map
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2456,7 +2476,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var Authenticator_1 = __webpack_require__(5);
+	var Authenticator_1 = __webpack_require__(6);
 	var Config_1 = __webpack_require__(2);
 	var RefreshableAuthenticator = (function (_super) {
 	    __extends(RefreshableAuthenticator, _super);
@@ -2483,15 +2503,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    RefreshableAuthenticator.prototype.refreshToken = function (token) {
 	        var _this = this;
-	        var requestUrl = Config_1.AuthDefaults.BASE_URL + Config_1.AuthDefaults.TOKEN_PATH;
+	        var requestUrl = Config_1.authDefaults.BASE_URL + Config_1.authDefaults.TOKEN_PATH;
 	        var payload = {
-	            body: "grant_type=refresh_token&client_id=" + this.config.clientId + "&client_secret=" + this.config.clientSecret + "&refresh_token=" + encodeURIComponent(token.refreshToken),
+	            body: ("grant_type=refresh_token&client_id=" + this.config.clientId) +
+	                ("&client_secret=" + this.config.clientSecret + "&refresh_token=" + encodeURIComponent(token.refreshToken)),
 	            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	        };
 	        return this.httpClient.post(requestUrl, payload).then(function (response) {
-	            if (response.status == 200) {
+	            if (response.status === 200) {
 	                var tokenResponse = JSON.parse(response.body);
-	                token.update(tokenResponse['access_token'], tokenResponse['expires_in'], tokenResponse['token_type'], new Date(tokenResponse['created_at'] * 1000), tokenResponse['refresh_token']);
+	                token.update(tokenResponse.access_token, tokenResponse.expires_in, tokenResponse.token_type, new Date(tokenResponse.created_at * 1000), tokenResponse.refresh_token);
 	                return _this.storeToken(token);
 	            }
 	            throw new Error('Authentication failed');
@@ -2503,7 +2524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=RefreshableAuthenticator.js.map
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2512,7 +2533,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var Token_1 = __webpack_require__(35);
+	var Token_1 = __webpack_require__(36);
 	var ClientToken = (function (_super) {
 	    __extends(ClientToken, _super);
 	    function ClientToken() {
@@ -2524,7 +2545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=ClientToken.js.map
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2552,7 +2573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=Token.js.map
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2561,23 +2582,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var Authenticator_1 = __webpack_require__(5);
-	var OAuthHttpClient_1 = __webpack_require__(8);
+	var Authenticator_1 = __webpack_require__(6);
+	var OAuthHttpClient_1 = __webpack_require__(9);
 	var Config_1 = __webpack_require__(2);
-	var UserToken_1 = __webpack_require__(37);
+	var UserToken_1 = __webpack_require__(38);
 	var CallbackHashParser = (function () {
 	    function CallbackHashParser(s) {
 	        var _this = this;
 	        this.response = {};
-	        if (s[0] == "#")
+	        if (s[0] === '#') {
 	            s = s.slice(1);
-	        s.split("&").map(function (pair) {
-	            var param = pair.split("=");
+	        }
+	        s.split('&').map(function (pair) {
+	            var param = pair.split('=');
 	            _this.response[param[0]] = param[1];
 	        });
 	    }
 	    CallbackHashParser.prototype.getToken = function () {
-	        return new UserToken_1.UserToken(this.response['access_token'], this.response['expires_in'], this.response['token_type'], this.response['refresh_token']);
+	        return new UserToken_1.UserToken(this.response.access_token, this.response.expires_in, this.response.token_type, undefined, this.response.refresh_token);
 	    };
 	    return CallbackHashParser;
 	}());
@@ -2598,24 +2620,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	            catch (err) {
 	                console.error(err);
 	            }
-	            return new Promise(function () { });
+	            // tslint:disable-next-line:promise-must-complete
+	            return new Promise(function () { return; });
 	        }
 	        //TODO: try to refresh
 	        return this.loadToken(UserToken_1.UserToken)
 	            .then(function (token) {
-	            if (token)
+	            if (token) {
 	                _this.httpClient.setAccessToken(token);
+	            }
 	            return token ? true : false;
 	        });
 	    };
 	    UserImplicitAuthenticator.prototype.authenticate = function () {
 	        var _this = this;
-	        var credentials = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            credentials[_i - 0] = arguments[_i];
-	        }
 	        return new Promise(function (resolve, reject) {
-	            var authorizationUrl = Config_1.AuthDefaults.BASE_URL + Config_1.AuthDefaults.AUTHORIZATION_PATH + "?" +
+	            var authorizationUrl = Config_1.authDefaults.BASE_URL + Config_1.authDefaults.AUTHORIZATION_PATH + '?' +
 	                ("response_type=token&client_id=" + _this.config.clientId + "&redirect_uri=" + encodeURIComponent(_this.config.redirectUri));
 	            var callback = function (hash) {
 	                var responseParser = new CallbackHashParser(hash);
@@ -2628,7 +2648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })
 	                    .catch(function (err) { reject(err); });
 	            };
-	            var popup = _this.config.popup ? window.open(authorizationUrl, "_blank", "width=500,height=500,location=0") : window.open(authorizationUrl);
+	            var popup = _this.config.popup ? window.open(authorizationUrl, '_blank', 'width=500,height=500,location=0') : window.open(authorizationUrl);
 	            popup.onload = function () {
 	                popup.response_callback = callback;
 	            };
@@ -2646,7 +2666,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=UserImplicitAuthenticator.js.map
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2655,7 +2675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var Token_1 = __webpack_require__(35);
+	var Token_1 = __webpack_require__(36);
 	var UserToken = (function (_super) {
 	    __extends(UserToken, _super);
 	    function UserToken() {
@@ -2667,7 +2687,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=UserToken.js.map
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2676,10 +2696,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var OAuthHttpClient_1 = __webpack_require__(8);
+	var OAuthHttpClient_1 = __webpack_require__(9);
 	var Config_1 = __webpack_require__(2);
-	var UserToken_1 = __webpack_require__(37);
-	var RefreshableAuthenticator_1 = __webpack_require__(33);
+	var UserToken_1 = __webpack_require__(38);
+	var RefreshableAuthenticator_1 = __webpack_require__(34);
 	var UserCredentialsAuthenticator = (function (_super) {
 	    __extends(UserCredentialsAuthenticator, _super);
 	    function UserCredentialsAuthenticator(config, storage) {
@@ -2691,8 +2711,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        //TODO: try to refresh
 	        return this.loadToken(UserToken_1.UserToken)
 	            .then(function (token) {
-	            if (token)
+	            if (token) {
 	                _this.httpClient.setAccessToken(token);
+	            }
 	            return token ? true : false;
 	        });
 	    };
@@ -2703,18 +2724,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	            credentials[_i - 0] = arguments[_i];
 	        }
 	        return new Promise(function (resolve, reject) {
-	            var username = credentials[0], password = credentials[1];
+	            var username = credentials[0];
+	            var password = credentials[1];
 	            if (username && password) {
-	                var requestUrl = Config_1.AuthDefaults.BASE_URL + Config_1.AuthDefaults.TOKEN_PATH;
+	                var requestUrl = Config_1.authDefaults.BASE_URL + Config_1.authDefaults.TOKEN_PATH;
 	                var payload = {
-	                    body: "grant_type=password&client_id=" + _this.config.clientId + "&client_secret=" + _this.config.clientSecret + "&username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password),
+	                    body: ("grant_type=password&client_id=" + _this.config.clientId + "&client_secret=" + _this.config.clientSecret) +
+	                        ("&username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password)),
 	                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 	                };
 	                _this.httpClient.setAccessToken(null);
 	                _this.httpClient.post(requestUrl, payload).then(function (response) {
-	                    if (response.status == 200) {
+	                    if (response.status === 200) {
 	                        var tokenResponse = JSON.parse(response.body);
-	                        var token_1 = new UserToken_1.UserToken(tokenResponse['access_token'], tokenResponse['expires_in'], tokenResponse['token_type'], new Date(tokenResponse['created_at'] * 1000), tokenResponse['refresh_token']);
+	                        var token_1 = new UserToken_1.UserToken(tokenResponse.access_token, tokenResponse.expires_in, tokenResponse.token_type, new Date(tokenResponse.created_at * 1000), tokenResponse.refresh_token);
 	                        _this.httpClient.setAccessToken(token_1);
 	                        _this.storeToken(token_1)
 	                            .then(function () {
@@ -2744,7 +2767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=UserCredentialsAuthenticator.js.map
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2753,8 +2776,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var Authenticator_1 = __webpack_require__(5);
-	var HttpClient_1 = __webpack_require__(9);
+	var Authenticator_1 = __webpack_require__(6);
+	var HttpClient_1 = __webpack_require__(10);
 	var StaticApiKeyAuthenticator = (function (_super) {
 	    __extends(StaticApiKeyAuthenticator, _super);
 	    function StaticApiKeyAuthenticator(config, storage) {
@@ -2777,12 +2800,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=StaticApiKeyAuthenticator.js.map
 
 /***/ },
-/* 40 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var BaseModel_1 = __webpack_require__(41);
-	var Api_1 = __webpack_require__(42);
+	var BaseModel_1 = __webpack_require__(42);
+	var Api_1 = __webpack_require__(43);
 	var DbApiClient = (function () {
 	    function DbApiClient() {
 	    }
@@ -2795,12 +2818,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	    };
 	    DbApiClient.prototype.getAvailableModels = function () {
+	        var _this = this;
 	        var models = [];
-	        for (var p in this) {
-	            if (this.hasOwnProperty(p) && this[p].hasOwnProperty('_schema')) {
+	        Object.keys(this).forEach(function (p) {
+	            if (_this.hasOwnProperty(p) && _this[p].hasOwnProperty('_schema')) {
 	                models.push(p);
 	            }
-	        }
+	        });
 	        return models;
 	    };
 	    DbApiClient.prototype.generateModels = function (schema) {
@@ -2815,7 +2839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=DbApiClient.js.map
 
 /***/ },
-/* 41 */
+/* 42 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -2824,6 +2848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this._data = data || {};
 	        this.updateFields(this._data);
 	    }
+	    // tslint:disable-next-line:no-reserved-keywords
 	    BaseModel.get = function (id) {
 	        var _this = this;
 	        return this._api.getObject(this.getType(), id)
@@ -2855,9 +2880,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.constructor['_schema'].fields.forEach(function (field) {
 	            data[field.name] = _this.convertValue(_this[field.name], field.type);
 	        });
-	        if (this['_id']) {
+	        if (this._id) {
 	            // update
-	            return api.updateObject(this.constructor['getType'](), this['_id'], data)
+	            return api.updateObject(this.constructor['getType'](), this._id, data)
 	                .then(function () {
 	                return _this;
 	            });
@@ -2866,17 +2891,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // create
 	            return api.createObject(this.constructor['getType'](), data)
 	                .then(function (newId) {
-	                _this['_id'] = newId;
+	                _this._id = newId;
 	                return _this;
 	            });
 	        }
 	    };
-	    //noinspection ReservedWordAsName
+	    // tslint:disable-next-line:no-reserved-keywords
 	    BaseModel.prototype.delete = function () {
 	        var api = this.constructor['_api'];
-	        if (!this['_id'])
+	        if (!this._id) {
 	            return Promise.reject(new Error('Object must have an id'));
-	        return api.deleteObject(this.constructor['getType'](), this['_id']);
+	        }
+	        return api.deleteObject(this.constructor['getType'](), this._id);
 	    };
 	    // TODO: figure out the best way for web
 	    // setAttachment() {
@@ -2893,32 +2919,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    BaseModel.prototype.updateFields = function (data) {
 	        var _this = this;
-	        if (!data || !this.constructor['_schema'])
+	        if (!data || !this.constructor['_schema']) {
 	            return;
-	        if (data['_id'])
-	            this['_id'] = data['_id'];
+	        }
+	        if (data._id) {
+	            this._id = data._id;
+	        }
 	        this.constructor['_schema'].fields.forEach(function (f) {
 	            _this[f.name] = _this.convertValue(data[f.name], f.type);
 	        });
 	    };
-	    BaseModel.prototype.convertValue = function (value, type) {
+	    BaseModel.prototype.convertValue = function (fieldValue, fieldType) {
 	        var _this = this;
-	        if (value == null || value == undefined)
+	        if (fieldValue === null || fieldValue === undefined) {
 	            return null;
-	        switch (type) {
+	        }
+	        switch (fieldType) {
 	            case 'string':
-	                return "" + value;
+	                return "" + fieldValue;
 	            case 'integer':
-	                return parseInt(value);
+	                return parseInt(fieldValue, 10);
 	            case 'float':
-	                return parseFloat(value);
+	                return parseFloat(fieldValue);
 	            case 'boolean':
-	                return !!value;
+	                return !!fieldValue;
 	            default:
-	                if (type.indexOf('array[') == 0)
-	                    return (Array.isArray(value) ? value : [value]).map(function (v) {
-	                        return _this.convertValue(v, type.substring(6, type.length - 1));
+	                if (fieldType.indexOf('array[') === 0) {
+	                    return (Array.isArray(fieldValue) ? fieldValue : [fieldValue]).map(function (v) {
+	                        return _this.convertValue(v, fieldType.substring(6, fieldType.length - 1));
 	                    });
+	                }
 	                return null;
 	        }
 	    };
@@ -2926,11 +2956,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	}());
 	exports.BaseModel = BaseModel;
 	function makeModel(cls, api) {
+	    // tslint:disable-next-line:no-eval
 	    var newModel = eval("(function " + cls.name + "(data){BaseModel.call(this, data)})");
 	    // let newModel = function(data){BaseModel.call(this, data)};
-	    for (var p in BaseModel)
-	        if (BaseModel.hasOwnProperty(p))
+	    Object.keys(BaseModel).forEach(function (p) {
+	        if (BaseModel.hasOwnProperty(p)) {
 	            newModel[p] = BaseModel[p];
+	        }
+	    });
 	    newModel.prototype = Object.create(BaseModel.prototype);
 	    newModel.prototype.constructor = newModel;
 	    newModel.prototype.name = cls.name;
@@ -2944,30 +2977,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=BaseModel.js.map
 
 /***/ },
-/* 42 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var Schema_1 = __webpack_require__(43);
+	var Schema_1 = __webpack_require__(44);
 	var Config_1 = __webpack_require__(2);
-	var cerialize_1 = __webpack_require__(46);
-	var Http_1 = __webpack_require__(50);
-	var API_BASE_PATH = "/api/v1/storage";
+	var cerialize_1 = __webpack_require__(47);
+	var Http_1 = __webpack_require__(51);
+	var API_BASE_PATH = 'api/v1/storage';
 	var Api = (function () {
 	    function Api(httpClient) {
 	        this.httpClient = httpClient;
 	    }
 	    Api.prototype.fetchSchema = function () {
-	        return this.httpClient.get("" + Config_1.AuthDefaults.BASE_URL + API_BASE_PATH + "/_schema")
+	        return this.httpClient.get("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/_schema")
 	            .then(function (response) {
-	            if (response.status != 200) {
+	            if (response.status !== 200) {
 	                throw new Error('Cannot fetch database schema');
 	            }
 	            return cerialize_1.Deserialize(JSON.parse(response.body), Schema_1.Schema);
 	        });
 	    };
-	    Api.prototype.getObject = function (type, id) {
-	        return this.httpClient.get("" + Config_1.AuthDefaults.BASE_URL + API_BASE_PATH + "/data/" + type + "/" + id)
+	    Api.prototype.getObject = function (objType, id) {
+	        return this.httpClient.get("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/" + id)
 	            .then(function (response) {
 	            switch (response.status) {
 	                case 200:
@@ -2979,8 +3012,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        });
 	    };
-	    Api.prototype.getObjects = function (type, query, options) {
-	        return this.httpClient.get("" + Config_1.AuthDefaults.BASE_URL + API_BASE_PATH + "/data/" + type + "/?" + Api.getObjectsRequestQuerystring(query, options))
+	    Api.prototype.getObjects = function (objType, query, options) {
+	        return this.httpClient.get("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/?" + Api.getObjectsRequestQuerystring(query, options))
 	            .then(function (response) {
 	            switch (response.status) {
 	                case 200:
@@ -2990,27 +3023,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        });
 	    };
-	    Api.prototype.allObjects = function (type, options) {
+	    Api.prototype.allObjects = function (objType, options) {
 	        var _this = this;
 	        var requestOptions = { page: 1 };
 	        var limit = options && options.limit ? options.limit : null;
-	        if (limit && limit < 1000)
+	        if (limit && limit < 1000) {
 	            requestOptions.limit = limit;
-	        return this.getObjects(type, requestOptions)
+	        }
+	        return this.getObjects(objType, requestOptions)
 	            .then(function (queryResult) {
 	            var pageSize = queryResult.objects.length;
 	            var objs = queryResult.objects;
 	            if (queryResult.metadata.pages > 1 && (!limit || pageSize < limit)) {
 	                var pages = queryResult.metadata.pages - 1;
-	                if (limit)
+	                if (limit) {
 	                    pages = Math.min((Math.ceil(limit / pageSize) - 1), pages);
+	                }
 	                return Promise.all(Array.apply(null, Array(pages)).map(function (_, page) {
 	                    var pageRequestOptions = { page: requestOptions.page + page + 1 };
-	                    if (limit)
+	                    if (limit) {
 	                        pageRequestOptions.limit = pageSize;
-	                    if (requestOptions.limit)
+	                    }
+	                    if (requestOptions.limit) {
 	                        pageRequestOptions.limit = requestOptions.limit;
-	                    return _this.getObjects(type, pageRequestOptions);
+	                    }
+	                    return _this.getObjects(objType, pageRequestOptions);
 	                }))
 	                    .then(function (results) {
 	                    return objs.concat.apply(objs, results.map(function (r) { return r.objects; }));
@@ -3027,30 +3064,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return objects;
 	        });
 	    };
-	    Api.prototype.countObjects = function (type, query) {
-	        return this.getObjects(type, query, { limit: 1 })
+	    Api.prototype.countObjects = function (objType, query) {
+	        return this.getObjects(objType, query, { limit: 1 })
 	            .then(function (queryResult) {
 	            return queryResult.metadata.total;
 	        });
 	    };
-	    Api.prototype.createObject = function (type, data) {
+	    Api.prototype.createObject = function (objType, data) {
 	        var options = {};
 	        options.body = data;
-	        return this.httpClient.post("" + Config_1.AuthDefaults.BASE_URL + API_BASE_PATH + "/data/" + type + "/", options)
+	        return this.httpClient.post("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/", options)
 	            .then(function (response) {
 	            switch (response.status) {
 	                case 201:
-	                    var location_1 = response.headers['Location'].split('/');
+	                    var location_1 = response.headers.Location.split('/');
 	                    return location_1[location_1.length - 1];
 	                default:
 	                    throw new Error("Unexpected API response (" + response.status + ")");
 	            }
 	        });
 	    };
-	    Api.prototype.updateObject = function (type, id, data) {
+	    Api.prototype.updateObject = function (objType, id, data) {
 	        var options = {};
 	        options.body = data;
-	        return this.httpClient.post("" + Config_1.AuthDefaults.BASE_URL + API_BASE_PATH + "/data/" + type + "/" + id, options)
+	        return this.httpClient.post("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/" + id, options)
 	            .then(function (response) {
 	            switch (response.status) {
 	                case 200:
@@ -3062,8 +3099,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        });
 	    };
-	    Api.prototype.deleteObject = function (type, id) {
-	        return this.httpClient.request('DELETE', "" + Config_1.AuthDefaults.BASE_URL + API_BASE_PATH + "/data/" + type + "/" + id)
+	    Api.prototype.deleteObject = function (objType, id) {
+	        return this.httpClient.request('DELETE', "" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/" + id)
 	            .then(function (response) {
 	            switch (response.status) {
 	                case 200:
@@ -3077,38 +3114,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    Api.getObjectsRequestQuerystring = function (query, options) {
 	        var requestQuery = options || {};
-	        if (query)
+	        if (query) {
 	            requestQuery.query = query;
-	        return Http_1.urlencode(requestQuery);
+	        }
+	        return Http_1.urlEncode(requestQuery);
 	    };
 	    return Api;
 	}());
 	exports.Api = Api;
 	//# sourceMappingURL=Api.js.map
-
-/***/ },
-/* 43 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var Cls_1 = __webpack_require__(44);
-	var cerialize_1 = __webpack_require__(46);
-	var Schema = (function () {
-	    function Schema() {
-	    }
-	    __decorate([
-	        cerialize_1.deserializeAs(Cls_1.Cls)
-	    ], Schema.prototype, "classes", void 0);
-	    return Schema;
-	}());
-	exports.Schema = Schema;
-	//# sourceMappingURL=Schema.js.map
 
 /***/ },
 /* 44 */
@@ -3121,10 +3135,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    return c > 3 && r && Object.defineProperty(target, key, r), r;
 	};
-	var Field_1 = __webpack_require__(45);
-	var Index_1 = __webpack_require__(48);
-	var Config_1 = __webpack_require__(49);
-	var cerialize_1 = __webpack_require__(46);
+	var Cls_1 = __webpack_require__(45);
+	var cerialize_1 = __webpack_require__(47);
+	var Schema = (function () {
+	    function Schema() {
+	    }
+	    __decorate([
+	        cerialize_1.deserializeAs(Cls_1.Cls)
+	    ], Schema.prototype, "classes", void 0);
+	    return Schema;
+	}());
+	exports.Schema = Schema;
+	//# sourceMappingURL=Schema.js.map
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var Field_1 = __webpack_require__(46);
+	var Index_1 = __webpack_require__(49);
+	var Config_1 = __webpack_require__(50);
+	var cerialize_1 = __webpack_require__(47);
 	var Cls = (function () {
 	    function Cls() {
 	    }
@@ -3146,7 +3184,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=Cls.js.map
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3156,7 +3194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    return c > 3 && r && Object.defineProperty(target, key, r), r;
 	};
-	var cerialize_1 = __webpack_require__(46);
+	var cerialize_1 = __webpack_require__(47);
 	var Field = (function () {
 	    function Field() {
 	    }
@@ -3172,13 +3210,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=Field.js.map
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(47);
+	module.exports = __webpack_require__(48);
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -3835,7 +3873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3845,7 +3883,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    return c > 3 && r && Object.defineProperty(target, key, r), r;
 	};
-	var cerialize_1 = __webpack_require__(46);
+	var cerialize_1 = __webpack_require__(47);
 	var Index = (function () {
 	    function Index() {
 	    }
@@ -3861,37 +3899,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=Index.js.map
 
 /***/ },
-/* 49 */
-/***/ function(module, exports) {
+/* 50 */
+/***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var cerialize_1 = __webpack_require__(47);
 	var Config = (function () {
 	    function Config() {
 	    }
+	    __decorate([
+	        cerialize_1.deserialize
+	    ], Config.prototype, "sync", void 0);
 	    return Config;
 	}());
 	exports.Config = Config;
 	//# sourceMappingURL=Config.js.map
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports) {
 
 	"use strict";
-	function urlencode(obj) {
+	// tslint:disable-next-line:export-name
+	function urlEncode(obj) {
 	    var str = [];
-	    for (var p in obj) {
+	    Object.keys(obj).forEach(function (p) {
 	        if (obj.hasOwnProperty(p)) {
-	            str.push(typeof obj[p] == "object" ? urlencode(obj[p]) : encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+	            str.push(typeof obj[p] === 'object' ? urlEncode(obj[p]) : encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
 	        }
-	    }
-	    return str.join("&");
+	    });
+	    return str.join('&');
 	}
-	exports.urlencode = urlencode;
+	exports.urlEncode = urlEncode;
 	//# sourceMappingURL=Http.js.map
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3900,13 +3949,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var TokenStorage_1 = __webpack_require__(52);
-	var DEFAULT_COOKIE_NAME = "scandit_flow";
+	var TokenStorage_1 = __webpack_require__(53);
+	var DEFAULT_COOKIE_NAME = 'scandit_flow';
 	var CookieStorage = (function (_super) {
 	    __extends(CookieStorage, _super);
 	    function CookieStorage(key) {
-	        if (typeof document == 'undefined' || typeof document.cookie == 'undefined')
-	            throw new ReferenceError("Cookies are not supported.");
+	        if (document === undefined || document.cookie === undefined) {
+	            throw new ReferenceError('Cookies are not supported.');
+	        }
 	        _super.call(this);
 	        this.key = key || DEFAULT_COOKIE_NAME;
 	    }
@@ -3915,9 +3965,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var cookie = document.cookie
 	            .split(';')
 	            .map(function (x) { return x.split('='); })
-	            .find(function (x) { return x[0] == _this.key; });
-	        if (!cookie || cookie[1] == '')
+	            .find(function (x) { return x[0] === _this.key; });
+	        if (!cookie || cookie[1] === '') {
 	            return Promise.resolve(null);
+	        }
 	        return Promise.resolve(TokenStorage_1.TokenStorage.deserializeToken(cookie[1]));
 	    };
 	    CookieStorage.prototype.setToken = function (token) {
@@ -3934,12 +3985,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=CookieStorage.js.map
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var UserToken_1 = __webpack_require__(37);
-	var ClientToken_1 = __webpack_require__(34);
+	var UserToken_1 = __webpack_require__(38);
+	var ClientToken_1 = __webpack_require__(35);
 	var TokenStorage = (function () {
 	    function TokenStorage() {
 	    }
@@ -3952,7 +4003,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    TokenStorage.deserializeToken = function (value) {
 	        var token = JSON.parse(decodeURIComponent(value));
-	        token.createdAt = new Date(token['createdAt']);
+	        token.createdAt = new Date(token.createdAt);
 	        switch (token._cls) {
 	            case 'UserToken':
 	                return new UserToken_1.UserToken(token.token, token.expires, token.tokenType, token.createdAt, token.refreshToken);
@@ -3968,7 +4019,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=TokenStorage.js.map
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
@@ -3977,20 +4028,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var BrowserStorage_1 = __webpack_require__(54);
+	var BrowserStorage_1 = __webpack_require__(55);
+	var NodeLocalStorage_1 = __webpack_require__(56);
 	var storage;
-	if (typeof localStorage !== 'undefined') {
-	    storage = localStorage;
+	if (window !== undefined && window.localStorage !== undefined) {
+	    storage = window.localStorage;
 	}
-	else if (typeof process !== 'undefined') {
-	    var NodeLocalStorage = __webpack_require__(55).LocalStorage;
-	    storage = new NodeLocalStorage();
+	else if (process !== undefined) {
+	    storage = new NodeLocalStorage_1.NodeLocalStorage();
 	}
 	var LocalStorage = (function (_super) {
 	    __extends(LocalStorage, _super);
 	    function LocalStorage(key) {
-	        if (typeof storage == 'undefined')
-	            throw new ReferenceError("Local storage is not supported.");
+	        if (storage === undefined) {
+	            throw new ReferenceError('Local storage is not supported.');
+	        }
 	        _super.call(this, storage, key);
 	    }
 	    return LocalStorage;
@@ -4000,7 +4052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4009,8 +4061,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var TokenStorage_1 = __webpack_require__(52);
-	var DEFAULT_STORAGE_KEY = "scandit_flow";
+	var TokenStorage_1 = __webpack_require__(53);
+	var DEFAULT_STORAGE_KEY = 'scandit_flow';
 	var BrowserStorage = (function (_super) {
 	    __extends(BrowserStorage, _super);
 	    function BrowserStorage(storage, key) {
@@ -4020,8 +4072,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    BrowserStorage.prototype.getToken = function () {
 	        var token = this.storage.getItem(this.key);
-	        if (!token)
+	        if (!token) {
 	            return Promise.resolve(null);
+	        }
 	        return Promise.resolve(TokenStorage_1.TokenStorage.deserializeToken(token));
 	    };
 	    BrowserStorage.prototype.setToken = function (token) {
@@ -4038,13 +4091,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	//# sourceMappingURL=BrowserStorage.js.map
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports) {
 
 	module.exports = undefined;
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
@@ -4053,20 +4106,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
-	var BrowserStorage_1 = __webpack_require__(54);
+	var BrowserStorage_1 = __webpack_require__(55);
+	var NodeSessionStorage_1 = __webpack_require__(56);
 	var storage;
-	if (typeof sessionStorage !== 'undefined') {
-	    storage = sessionStorage;
+	if (window !== undefined && window.sessionStorage !== undefined) {
+	    storage = window.sessionStorage;
 	}
-	else if (typeof process !== 'undefined') {
-	    var NodeSessionStorage = __webpack_require__(55).SessionStorage;
-	    storage = new NodeSessionStorage();
+	else if (process !== undefined) {
+	    storage = new NodeSessionStorage_1.NodeSessionStorage();
 	}
 	var SessionStorage = (function (_super) {
 	    __extends(SessionStorage, _super);
 	    function SessionStorage(key) {
-	        if (typeof storage == 'undefined')
-	            throw new ReferenceError("Local storage is not supported.");
+	        if (storage === undefined) {
+	            throw new ReferenceError('Local storage is not supported.');
+	        }
 	        _super.call(this, storage, key);
 	    }
 	    return SessionStorage;
@@ -4074,19 +4128,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.SessionStorage = SessionStorage;
 	//# sourceMappingURL=SessionStorage.js.map
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ },
-/* 57 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var Config_1 = __webpack_require__(2);
-	exports.Method = Config_1.AuthMethod;
-	exports.Storage = Config_1.StorageMethod;
-	/**
-	 * @namespace Scandit.Auth
-	 */
-	//# sourceMappingURL=Auth.js.map
 
 /***/ }
 /******/ ])

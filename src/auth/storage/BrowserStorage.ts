@@ -13,18 +13,20 @@ export abstract class BrowserStorage extends TokenStorage {
         this.storage = storage;
     }
 
-    getToken(): Promise<Token> {
-        var token = this.storage.getItem(this.key);
-        if (!token) return Promise.resolve<Token>(null);
+    public getToken(): Promise<Token> {
+        const token = this.storage.getItem(this.key);
+        if (!token) {
+            return Promise.resolve<Token>(null);
+        }
         return Promise.resolve<Token>(TokenStorage.deserializeToken(token));
     }
 
-    setToken(token: Token): Promise<void> {
+    public setToken(token: Token): Promise<void> {
         this.storage.setItem(this.key, TokenStorage.serializeToken(token));
         return Promise.resolve<void>(null);
     }
 
-    clear(): Promise<void> {
+    public clear(): Promise<void> {
         this.storage.removeItem(this.key);
         return Promise.resolve<void>(null);
     }

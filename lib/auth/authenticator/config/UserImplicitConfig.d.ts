@@ -1,5 +1,5 @@
-import { Config } from "./Config";
-export interface UserImplicitConfig extends Config {
+import { IConfig } from './Config';
+export interface IUserImplicitConfig extends IConfig {
     clientId: string;
     redirectUri: string;
     popup: boolean;

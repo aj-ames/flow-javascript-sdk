@@ -1,16 +1,16 @@
 import {Authenticator} from '../../../src/auth/authenticator/Authenticator';
-import {HttpClientInterface} from '../../../src/http/HttpClientInterface';
+import {IHttpClient} from '../../../src/http/HttpClientInterface';
 
 class TestAuthenticator extends Authenticator {
-    init(): Promise<boolean> {
+    public init(): Promise<boolean> {
         return undefined;
     }
 
-    authenticate(credentials: string): Promise<void> {
+    public authenticate(credentials: string): Promise<void> {
         return undefined;
     }
 
-    getHttpClient(): HttpClientInterface {
+    public getHttpClient(): IHttpClient {
         return undefined;
     }
 

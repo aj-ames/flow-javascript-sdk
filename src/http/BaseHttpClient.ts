@@ -1,36 +1,36 @@
-import {HttpClientInterface, RequestOptions, Response} from './HttpClientInterface';
+import {IHttpClient, IRequestOptions, IResponse} from './HttpClientInterface';
 
-export abstract class BaseHttpClient implements HttpClientInterface {
+export abstract class BaseHttpClient implements IHttpClient {
     protected authHeader: string;
 
-    get(url: string, options?: RequestOptions): Promise<Response> {
+    // tslint:disable-next-line:no-reserved-keywords
+    public get(url: string, options?: IRequestOptions): Promise<IResponse> {
         return this.request('GET', url, options);
     }
 
-    options(url: string, options?: RequestOptions): Promise<Response> {
+    public options(url: string, options?: IRequestOptions): Promise<IResponse> {
         return this.request('GET', url, options);
     }
 
-    post(url: string, options?: RequestOptions): Promise<Response> {
+    public post(url: string, options?: IRequestOptions): Promise<IResponse> {
         return this.request('POST', url, options);
     }
 
-    put(url: string, options?: RequestOptions): Promise<Response> {
+    public put(url: string, options?: IRequestOptions): Promise<IResponse> {
         return this.request('PUT', url, options);
     }
 
-    setAuthenticationHeader(authHeader: string): void {
+    public setAuthenticationHeader(authHeader: string): void {
         this.authHeader =  authHeader;
     }
 
-    getAuthenticationHeader(): string {
+    public getAuthenticationHeader(): string {
         return this.authHeader;
     }
 
-    hasAuthenticationInfo(): boolean {
+    public hasAuthenticationInfo(): boolean {
         return !!this.authHeader;
     }
 
-    abstract request(method: string, url: string, options?: RequestOptions): Promise<Response>
-
+    public abstract request(method: string, url: string, options?: IRequestOptions): Promise<IResponse>;
 }
