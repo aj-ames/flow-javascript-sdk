@@ -1,6 +1,6 @@
 export interface Config {
     method: AuthMethod;
-    storage: StorageMethod;
+    storage?: StorageMethod;
     storageKey?: string;
 }
 export declare const AuthDefaults: {
