@@ -16,7 +16,7 @@ class CallbackHashParser {
 
     constructor(s: string) {
         this.response = {};
-        if ( s[0] === '#') {
+        if (s[0] === '#') {
             s = s.slice(1);
         }
         s.split('&').map((pair) => {
@@ -48,8 +48,7 @@ export class UserImplicitAuthenticator extends Authenticator {
     public init(): Promise<boolean> {
         if (window.opener && window.location.hash) {
             try {
-                window.onload(null);
-                window['response_callback'](window.location.hash);
+                window.opener['popup_callback'](window.location.hash);
                 window.close();
             } catch (err) {
                 console.error(err);
@@ -58,7 +57,6 @@ export class UserImplicitAuthenticator extends Authenticator {
             return new Promise<boolean>(() => { return; } );
         }
 
-        //TODO: try to refresh
         return this.loadToken(UserToken)
             .then<boolean>((token) => {
                 if (token) {
@@ -85,20 +83,12 @@ export class UserImplicitAuthenticator extends Authenticator {
                     .catch((err) => { reject(err); });
             };
 
-            const popup: any =
-                this.config.popup ? window.open(authorizationUrl, '_blank', 'width=500,height=500,location=0') : window.open(authorizationUrl);
-            popup.onload = () => {
-                popup.response_callback = callback;
-            };
-            popup.onbeforeunload = () => {
-                reject();
-            };
+            this.config.popup ? window.open(authorizationUrl, '_blank', 'width=500,height=500,location=0') : window.open(authorizationUrl);
+            window['popup_callback'] = callback;
         });
     }
 
     public getHttpClient(): IHttpClient {
         return this.httpClient;
     }
-
-    // This can be moved to some separate class because it's also used in popup gateway
 }

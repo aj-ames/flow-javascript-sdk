@@ -1,6 +1,6 @@
 export interface IConfig {
     method: AuthMethod;
-    storage: StorageMethod;
+    storage?: StorageMethod;
     storageKey?: string;
 }
 
