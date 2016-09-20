@@ -2613,8 +2613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var _this = this;
 	        if (window.opener && window.location.hash) {
 	            try {
-	                window.onload(null);
-	                window['response_callback'](window.location.hash);
+	                window.opener['popup_callback'](window.location.hash);
 	                window.close();
 	            }
 	            catch (err) {
@@ -2623,7 +2622,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // tslint:disable-next-line:promise-must-complete
 	            return new Promise(function () { return; });
 	        }
-	        //TODO: try to refresh
 	        return this.loadToken(UserToken_1.UserToken)
 	            .then(function (token) {
 	            if (token) {
@@ -2648,13 +2646,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                })
 	                    .catch(function (err) { reject(err); });
 	            };
-	            var popup = _this.config.popup ? window.open(authorizationUrl, '_blank', 'width=500,height=500,location=0') : window.open(authorizationUrl);
-	            popup.onload = function () {
-	                popup.response_callback = callback;
-	            };
-	            popup.onbeforeunload = function () {
-	                reject();
-	            };
+	            _this.config.popup ? window.open(authorizationUrl, '_blank', 'width=500,height=500,location=0') : window.open(authorizationUrl);
+	            window['popup_callback'] = callback;
 	        });
 	    };
 	    UserImplicitAuthenticator.prototype.getHttpClient = function () {
