@@ -1,12 +1,13 @@
 import {IHttpClient, IRequestOptions} from '../../http/HttpClientInterface';
+
+import {Deserialize} from 'cerialize';
+import {IApi} from './ApiInterface';
+import {IQueryResult} from './QueryResult';
 import {Schema} from '../schema/Schema';
 import {authDefaults} from '../../auth/authenticator/config/Config';
-import {Deserialize} from 'cerialize';
 import {urlEncode} from '../../utils/Http';
-import {IQueryResult} from './QueryResult';
-import {IApi} from './ApiInterface';
 
-const API_BASE_PATH = 'api/v1/storage';
+const API_BASE_PATH = '/api/v1/storage';
 
 export class Api implements IApi {
     private httpClient: IHttpClient;

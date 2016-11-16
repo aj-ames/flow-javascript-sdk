@@ -1,7 +1,7 @@
 import { IHttpClient } from '../../http/HttpClientInterface';
-import { Schema } from '../schema/Schema';
-import { IQueryResult } from './QueryResult';
 import { IApi } from './ApiInterface';
+import { IQueryResult } from './QueryResult';
+import { Schema } from '../schema/Schema';
 export declare class Api implements IApi {
     private httpClient;
     constructor(httpClient: IHttpClient);

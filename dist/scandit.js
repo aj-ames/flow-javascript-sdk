@@ -2974,11 +2974,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
-	var Schema_1 = __webpack_require__(44);
+	var cerialize_1 = __webpack_require__(44);
+	var Schema_1 = __webpack_require__(46);
 	var Config_1 = __webpack_require__(2);
-	var cerialize_1 = __webpack_require__(47);
 	var Http_1 = __webpack_require__(51);
-	var API_BASE_PATH = 'api/v1/storage';
+	var API_BASE_PATH = '/api/v1/storage';
 	var Api = (function () {
 	    function Api(httpClient) {
 	        this.httpClient = httpClient;
@@ -3121,95 +3121,10 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var Cls_1 = __webpack_require__(45);
-	var cerialize_1 = __webpack_require__(47);
-	var Schema = (function () {
-	    function Schema() {
-	    }
-	    __decorate([
-	        cerialize_1.deserializeAs(Cls_1.Cls)
-	    ], Schema.prototype, "classes", void 0);
-	    return Schema;
-	}());
-	exports.Schema = Schema;
-	//# sourceMappingURL=Schema.js.map
+	module.exports = __webpack_require__(45);
 
 /***/ },
 /* 45 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var Field_1 = __webpack_require__(46);
-	var Index_1 = __webpack_require__(49);
-	var Config_1 = __webpack_require__(50);
-	var cerialize_1 = __webpack_require__(47);
-	var Cls = (function () {
-	    function Cls() {
-	    }
-	    __decorate([
-	        cerialize_1.deserialize
-	    ], Cls.prototype, "name", void 0);
-	    __decorate([
-	        cerialize_1.deserializeAs(Field_1.Field)
-	    ], Cls.prototype, "fields", void 0);
-	    __decorate([
-	        cerialize_1.deserializeAs(Index_1.Index)
-	    ], Cls.prototype, "indices", void 0);
-	    __decorate([
-	        cerialize_1.deserializeAs(Config_1.Config)
-	    ], Cls.prototype, "config", void 0);
-	    return Cls;
-	}());
-	exports.Cls = Cls;
-	//# sourceMappingURL=Cls.js.map
-
-/***/ },
-/* 46 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-	    return c > 3 && r && Object.defineProperty(target, key, r), r;
-	};
-	var cerialize_1 = __webpack_require__(47);
-	var Field = (function () {
-	    function Field() {
-	    }
-	    __decorate([
-	        cerialize_1.deserialize
-	    ], Field.prototype, "name", void 0);
-	    __decorate([
-	        cerialize_1.deserialize
-	    ], Field.prototype, "type", void 0);
-	    return Field;
-	}());
-	exports.Field = Field;
-	//# sourceMappingURL=Field.js.map
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(48);
-
-/***/ },
-/* 48 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {"use strict";
@@ -3866,6 +3781,91 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var Cls_1 = __webpack_require__(47);
+	var cerialize_1 = __webpack_require__(44);
+	var Schema = (function () {
+	    function Schema() {
+	    }
+	    __decorate([
+	        cerialize_1.deserializeAs(Cls_1.Cls)
+	    ], Schema.prototype, "classes", void 0);
+	    return Schema;
+	}());
+	exports.Schema = Schema;
+	//# sourceMappingURL=Schema.js.map
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var Field_1 = __webpack_require__(48);
+	var Index_1 = __webpack_require__(49);
+	var Config_1 = __webpack_require__(50);
+	var cerialize_1 = __webpack_require__(44);
+	var Cls = (function () {
+	    function Cls() {
+	    }
+	    __decorate([
+	        cerialize_1.deserialize
+	    ], Cls.prototype, "name", void 0);
+	    __decorate([
+	        cerialize_1.deserializeAs(Field_1.Field)
+	    ], Cls.prototype, "fields", void 0);
+	    __decorate([
+	        cerialize_1.deserializeAs(Index_1.Index)
+	    ], Cls.prototype, "indices", void 0);
+	    __decorate([
+	        cerialize_1.deserializeAs(Config_1.Config)
+	    ], Cls.prototype, "config", void 0);
+	    return Cls;
+	}());
+	exports.Cls = Cls;
+	//# sourceMappingURL=Cls.js.map
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+	    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+	    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+	    return c > 3 && r && Object.defineProperty(target, key, r), r;
+	};
+	var cerialize_1 = __webpack_require__(44);
+	var Field = (function () {
+	    function Field() {
+	    }
+	    __decorate([
+	        cerialize_1.deserialize
+	    ], Field.prototype, "name", void 0);
+	    __decorate([
+	        cerialize_1.deserialize
+	    ], Field.prototype, "type", void 0);
+	    return Field;
+	}());
+	exports.Field = Field;
+	//# sourceMappingURL=Field.js.map
+
+/***/ },
 /* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -3876,7 +3876,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    return c > 3 && r && Object.defineProperty(target, key, r), r;
 	};
-	var cerialize_1 = __webpack_require__(47);
+	var cerialize_1 = __webpack_require__(44);
 	var Index = (function () {
 	    function Index() {
 	    }
@@ -3902,7 +3902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
 	    return c > 3 && r && Object.defineProperty(target, key, r), r;
 	};
-	var cerialize_1 = __webpack_require__(47);
+	var cerialize_1 = __webpack_require__(44);
 	var Config = (function () {
 	    function Config() {
 	    }

@@ -20,7 +20,7 @@ var tsc = () => {
 
 // Tests
 gulp.task('pre-test', () => {
-    process.env.BASE_URL = 'http://test/';
+    process.env.BASE_URL = 'http://test';
     return gulp.src(['./typings/*.d.ts', './src/**/*.ts', './test/**/*.ts'])
         .pipe(tsc())
         .pipe(gulp.dest('.'));
