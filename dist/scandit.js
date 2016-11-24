@@ -2606,19 +2606,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	var UserImplicitAuthenticator = (function (_super) {
 	    __extends(UserImplicitAuthenticator, _super);
 	    function UserImplicitAuthenticator(config, storage) {
+	        try {
+	            window.opener['popup_callback'](window.location.hash);
+	            window.close();
+	        }
+	        catch (err) {
+	            console.error(err);
+	        }
 	        _super.call(this, config, storage);
 	        this.httpClient = new OAuthHttpClient_1.OAuthHttpClient(this);
 	    }
 	    UserImplicitAuthenticator.prototype.init = function () {
 	        var _this = this;
 	        if (window.opener && window.location.hash) {
-	            try {
-	                window.opener['popup_callback'](window.location.hash);
-	                window.close();
-	            }
-	            catch (err) {
-	                console.error(err);
-	            }
 	            // tslint:disable-next-line:promise-must-complete
 	            return new Promise(function () { return; });
 	        }
@@ -3511,7 +3511,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                instance[keyName] = deserializeArray(source, null);
 	            }
 	        }
-	        else if (typeof source === "string" && metadata.deserializedType === Date) {
+	        else if ((typeof source === "string" || source instanceof Date) && metadata.deserializedType === Date) {
 	            var deserializedDate = new Date(source);
 	            if (instance[keyName] instanceof Date) {
 	                instance[keyName].setTime(deserializedDate.getTime());
@@ -3547,7 +3547,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    else if (json && typeof json === "object") {
 	        return deserializeObject(json, type);
 	    }
-	    else if (typeof json === "string" && type === Date) {
+	    else if ((typeof json === "string" || json instanceof Date) && type === Date) {
 	        return new Date(json);
 	    }
 	    else if (typeof json === "string" && type === RegExp) {
@@ -3627,7 +3627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        else if (Array.isArray(source)) {
 	            instance[keyName] = deserializeArray(source, metadata.deserializedType || null);
 	        }
-	        else if (typeof source === "string" && metadata.deserializedType === Date) {
+	        else if ((typeof source === "string" || source instanceof Date) && metadata.deserializedType === Date) {
 	            instance[keyName] = new Date(source);
 	        }
 	        else if (typeof source === "string" && metadata.deserializedType === RegExp) {

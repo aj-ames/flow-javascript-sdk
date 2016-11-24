@@ -41,18 +41,19 @@ export class UserImplicitAuthenticator extends Authenticator {
     protected httpClient: OAuthHttpClient;
 
     constructor(config: IUserImplicitConfig, storage: TokenStorage) {
+        try {
+            window.opener['popup_callback'](window.location.hash);
+            window.close();
+        } catch (err) {
+            console.error(err);
+        }
+
         super(config, storage);
         this.httpClient = new OAuthHttpClient(this);
     }
 
     public init(): Promise<boolean> {
         if (window.opener && window.location.hash) {
-            try {
-                window.opener['popup_callback'](window.location.hash);
-                window.close();
-            } catch (err) {
-                console.error(err);
-            }
             // tslint:disable-next-line:promise-must-complete
             return new Promise<boolean>(() => { return; } );
         }
