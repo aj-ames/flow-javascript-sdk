@@ -136,7 +136,7 @@ client.Db.ModelName.all()
 For more detailed examples please take a look at the `examples` folder.
 
 ## Documentation
-API documentation will be available soon. For general documentation please refer to [Scandit Flow - Documentation](https://scandium.scandit.com/customer/documentation). _(You need to log in with an already existing account to access the documentation)_
+API documentation will be available soon. For general documentation please refer to [Scandit Flow - Documentation](http://docs.scandit.com/flow/).
 
 
 ## License
