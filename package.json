@@ -1,6 +1,6 @@
 {
   "name": "scandit-flow-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Scandit Flow - JavaScript SDK",
   "main": "lib/Scandit.js",
   "scripts": {
