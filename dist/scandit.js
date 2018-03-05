@@ -3252,7 +3252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .then(function (response) {
 	            switch (response.status) {
 	                case 201:
-	                    var location_1 = response.headers.Location.split('/');
+	                    var location_1 = (response.headers.Location || response.headers.location).split('/');
 	                    return location_1[location_1.length - 1];
 	                default:
 	                    throw new Error("Unexpected API response (" + response.status + ")");
