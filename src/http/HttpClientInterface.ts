@@ -13,7 +13,8 @@ export interface IResponse {
     body: string;
     headers: {
         'Content-Type'?: string,
-        Location?: string
+        Location?: string,
+        location?: string
     };
 }
 

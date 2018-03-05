@@ -13,6 +13,7 @@ export interface IResponse {
     headers: {
         'Content-Type'?: string;
         Location?: string;
+        location?: string;
     };
 }
 export interface IHttpClient {

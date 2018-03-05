@@ -108,7 +108,7 @@ export class Api implements IApi {
             .then((response) => {
                 switch (response.status) {
                     case 201:
-                        let location = <string[]>response.headers.Location.split('/');
+                        let location = <string[]>(response.headers.Location || response.headers.location).split('/');
                         return location[location.length - 1];
                     default:
                         throw new Error(`Unexpected API response (${response.status})`);
