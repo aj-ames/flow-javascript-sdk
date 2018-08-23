@@ -3262,7 +3262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    Api.prototype.updateObject = function (objType, id, data) {
 	        var options = {};
 	        options.body = data;
-	        return this.httpClient.post("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/" + id, options)
+	        return this.httpClient.put("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/" + id, options)
 	            .then(function (response) {
 	            switch (response.status) {
 	                case 200:

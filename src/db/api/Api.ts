@@ -120,7 +120,7 @@ export class Api implements IApi {
         const options = <IRequestOptions>{};
         options.body = data;
 
-        return this.httpClient.post(`${authDefaults.BASE_URL}${API_BASE_PATH}/data/${objType}/${id}`, options)
+        return this.httpClient.put(`${authDefaults.BASE_URL}${API_BASE_PATH}/data/${objType}/${id}`, options)
             .then((response) => {
                 switch (response.status) {
                     case 200:
