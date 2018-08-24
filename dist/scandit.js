@@ -3287,6 +3287,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	            }
 	        });
 	    };
+	    Api.prototype.batchCreate = function (objType, data) {
+	        var options = {};
+	        options.body = data;
+	        return this.httpClient.post("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/batch", options)
+	            .then(function (response) {
+	            switch (response.status) {
+	                case 200:
+	                    return JSON.parse(response.body);
+	                default:
+	                    throw new Error("Unexpected API response (" + response.status + ")");
+	            }
+	        });
+	    };
+	    Api.prototype.batchUpdate = function (objType, data) {
+	        var options = {};
+	        options.body = data;
+	        return this.httpClient.put("" + Config_1.authDefaults.BASE_URL + API_BASE_PATH + "/data/" + objType + "/batch", options)
+	            .then(function (response) {
+	            switch (response.status) {
+	                case 200:
+	                    return;
+	                default:
+	                    throw new Error("Unexpected API response (" + response.status + ")");
+	            }
+	        });
+	    };
 	    Api.getObjectsRequestQuerystring = function (query, options) {
 	        var requestQuery = options || {};
 	        if (query) {
