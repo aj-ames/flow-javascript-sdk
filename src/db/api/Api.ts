@@ -147,6 +147,36 @@ export class Api implements IApi {
             });
     }
 
+    public batchCreate(objType: string, data: {}[]): Promise<string[]> {
+        const options = <IRequestOptions>{};
+        options.body = data;
+
+        return this.httpClient.post(`${authDefaults.BASE_URL}${API_BASE_PATH}/data/${objType}/batch`, options)
+            .then((response) => {
+                switch (response.status) {
+                    case 200:
+                        return <string[]>JSON.parse(response.body);
+                    default:
+                        throw new Error(`Unexpected API response (${response.status})`);
+                }
+            });
+    }
+
+    public batchUpdate(objType: string, data: {}[]): Promise<void> {
+        const options = <IRequestOptions>{};
+        options.body = data;
+
+        return this.httpClient.put(`${authDefaults.BASE_URL}${API_BASE_PATH}/data/${objType}/batch`, options)
+            .then((response) => {
+                switch (response.status) {
+                    case 200:
+                        return;
+                    default:
+                        throw new Error(`Unexpected API response (${response.status})`);
+                }
+            });
+    }
+
     private static getObjectsRequestQuerystring(query?: {}, options?: any): string {
         const requestQuery: any = options || {};
         if (query) {

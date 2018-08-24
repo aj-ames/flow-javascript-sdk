@@ -13,5 +13,7 @@ export declare class Api implements IApi {
     createObject(objType: string, data: {}): Promise<string>;
     updateObject(objType: string, id: string, data: {}): Promise<void>;
     deleteObject(objType: string, id: string): Promise<void>;
+    batchCreate(objType: string, data: {}[]): Promise<string[]>;
+    batchUpdate(objType: string, data: {}[]): Promise<void>;
     private static getObjectsRequestQuerystring(query?, options?);
 }
