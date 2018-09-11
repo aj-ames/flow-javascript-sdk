@@ -15,8 +15,8 @@ export class OAuthHttpClient extends HttpClient {
 
     public request(method: string, url: string, options?: IRequestOptions): Promise<IResponse> {
         return super.request(method, url, options)
-            .catch((response) => {
-                if (response.status === 401 && this.token && this.token.isExpired() &&
+            .catch((error) => {
+                if (error.response.status === 401 && this.token && this.token.isExpired() &&
                     this.token.isRefreshable() && this.authenticator instanceof RefreshableAuthenticator) {
                     const token = this.token;
                     this.token = null;
@@ -27,7 +27,7 @@ export class OAuthHttpClient extends HttpClient {
                             return super.request(method, url, options);
                         });
                 }
-                return response;
+                return error;
             });
     }
 
