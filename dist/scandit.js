@@ -886,15 +886,18 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
+	/* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
+	            (typeof self !== "undefined" && self) ||
+	            window;
+	var apply = Function.prototype.apply;
 	
 	// DOM APIs, for completeness
 	
 	exports.setTimeout = function() {
-	  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+	  return new Timeout(apply.call(setTimeout, scope, arguments), clearTimeout);
 	};
 	exports.setInterval = function() {
-	  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+	  return new Timeout(apply.call(setInterval, scope, arguments), clearInterval);
 	};
 	exports.clearTimeout =
 	exports.clearInterval = function(timeout) {
@@ -909,7 +912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	Timeout.prototype.unref = Timeout.prototype.ref = function() {};
 	Timeout.prototype.close = function() {
-	  this._clearFn.call(window, this._id);
+	  this._clearFn.call(scope, this._id);
 	};
 	
 	// Does not start the time, just sets up the members needed.
@@ -937,7 +940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	// setimmediate attaches itself to the global object
 	__webpack_require__(9);
-	// On some exotic environments, it's not clear which object `setimmeidate` was
+	// On some exotic environments, it's not clear which object `setimmediate` was
 	// able to install onto.  Search each possibility in the same order as the
 	// `setimmediate` library.
 	exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
@@ -1163,8 +1166,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    OAuthHttpClient.prototype.request = function (method, url, options) {
 	        var _this = this;
 	        return _super.prototype.request.call(this, method, url, options)
-	            .catch(function (response) {
-	            if (response.status === 401 && _this.token && _this.token.isExpired() &&
+	            .catch(function (error) {
+	            if (error.response.status === 401 && _this.token && _this.token.isExpired() &&
 	                _this.token.isRefreshable() && _this.authenticator instanceof RefreshableAuthenticator_1.RefreshableAuthenticator) {
 	                var token_1 = _this.token;
 	                _this.token = null;
@@ -1175,7 +1178,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    return _super.prototype.request.call(_this, method, url, options);
 	                });
 	            }
-	            return response;
+	            return error;
 	        });
 	    };
 	    OAuthHttpClient.prototype.setAccessToken = function (token) {
